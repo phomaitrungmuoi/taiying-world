@@ -36,6 +36,21 @@
 .game-actions button:disabled{opacity:.4;cursor:default}.game-actions button.secondary{background:transparent;color:var(--green)}
 .game-hint,#game-status{text-align:center;font-size:13px;line-height:1.7;color:var(--muted);margin:8px 0}#game-status{min-height:23px;color:var(--green)}
 @media(max-width:580px){.arcade{margin:0 16px 40px;padding:22px 16px}.arcade-top{align-items:flex-start}.arcade h2{font-size:22px}.arcade-score{font-size:11px;line-height:1.8}.peek-cat{right:18px}}
+
+button.peek-cat{padding:0;border:0;background:transparent;cursor:pointer;width:82px;height:66px;top:-56px;right:20px;color:inherit}
+.peek-cat svg{width:100%;height:100%;display:block;overflow:visible}.cat-tail{transform-origin:27px 23px;animation:tail-sway 2.4s steps(3,end) infinite}
+.cat-eyes{transform-origin:14px 13px;animation:cat-blink 5s steps(1,end) infinite}
+.peek-cat.petted{animation:cat-hop .45s steps(4,end) 2}.peek-cat.petted .cat-eyes{transform:scaleY(.25);animation:none}.cat-heart{opacity:0;fill:#db9691}.peek-cat.petted .cat-heart{animation:cat-heart 1.2s steps(5,end)}
+.cat-bubble{position:absolute;right:4px;top:-86px;max-width:180px;padding:3px 9px;background:#b4d88a;color:#172018;font:12px/1.7 var(--mono);border:2px solid #111911;opacity:0;pointer-events:none;transition:opacity .15s}.cat-bubble.show{opacity:1}
+@keyframes tail-sway{50%{transform:rotate(10deg)}}@keyframes cat-blink{0%,92%,96%,100%{transform:scaleY(1)}93%,95%{transform:scaleY(.15)}}
+@keyframes cat-hop{50%{transform:translateY(-7px) rotate(-4deg)}}@keyframes cat-heart{10%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+.arcade-score{line-height:1.8}.game-stage{position:relative}
+.upgrade-panel{position:absolute;inset:0;padding:18px;background:#101710ed;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;border:2px solid #859c61}
+.upgrade-panel[hidden]{display:none}.upgrade-panel h3{margin:0 0 4px;font:14px/1.4 var(--mono);color:var(--green)}.upgrade-choices{display:flex;gap:10px;width:100%}
+.upgrade-choices button{flex:1;min-width:0;min-height:76px;padding:12px 4px;background:#283721;border:2px solid #718853;color:var(--text);font:14px/1.6 'Noto Sans TC',sans-serif;box-shadow:3px 3px #080f08}.upgrade-choices button:hover{background:#405433}.upgrade-choices button span{display:block;font:12px/1.5 var(--mono);color:var(--green)}
+@media(max-width:420px){.upgrade-panel{padding:10px;gap:8px}.upgrade-choices{gap:6px}.upgrade-choices button{font-size:12px;min-height:68px}.upgrade-choices button span{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.cat-eyes,.cat-tail,.peek-cat.petted,.cat-heart{animation:none!important}.peek-cat.petted .cat-heart{opacity:1}}
+
 </style>
 </head>
 <body>
@@ -44,7 +59,18 @@
 <main id="main">
 <section class="hero" id="home">
 <div class="hero-copy"><p class="eyebrow">HELLO, WORLD. <span>你好，世界。</span></p><h1>黃泰英<span>Huang Tai Ying<span class="cursor">_</span></span></h1><p class="role">元智大學 資訊工程學系<br><span>Computer Science · Yuan Ze University</span></p><p class="intro">i'm a ghoti</p><div class="actions"><a class="button primary" href="#about">認識我 <span>Explore ↓</span></a><a class="button" href="https://github.com/phomaitrungmuoi" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div>
-<aside class="profile"><svg class="peek-cat" viewBox="0 0 20 16" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#0c120e" d="M2 1h5v3h6V1h5v12h-2v3H4v-3H2z"/><path fill="#d5ba85" d="M3 2h3v4h8V2h3v11H3z"/><path fill="#d8908c" d="M4 3h1v2H4zm11 0h1v2h-1z"/><path fill="#101710" d="M5 8h2v2H5zm8 0h2v2h-2zM9 11h2v1H9z"/><path fill="#f0dfba" d="M3 13h4v3H3zm10 0h4v3h-4z"/></svg><div class="profile-top"><span>PLAYER PROFILE</span><span>01</span></div><div class="avatar-wrap"><span class="avatar-fallback" aria-hidden="true">TY</span><img id="avatar" src="https://github.com/phomaitrungmuoi.png?size=460" alt="黃泰英的 GitHub 頭像" width="300" height="300"></div><div class="profile-name">phomaitrungmuoi<span>STUDENT / EXPLORER</span><small class="student-id">學號 / ID 1141546</small></div><div class="profile-bottom"><span>YZU · 資工一年級</span><span class="tiny-blocks" aria-hidden="true">▪ ▪ ▪</span></div></aside>
+<aside class="profile"><button class="peek-cat" id="profile-cat" type="button" aria-label="摸摸貓咪 / Pet the cat"><svg viewBox="0 0 34 28" aria-hidden="true" focusable="false" shape-rendering="crispEdges">
+<path class="cat-tail" fill="#bca06b" d="M24 22h5v-3h2v-6h-3v-3h-3v3h2v3h1v3h-4z"/>
+<path fill="#101710" d="M5 2h3v2h3v3h8V4h3V2h3v19h-3v6H5v-6H3V7h2z"/>
+<path fill="#d8be89" d="M6 4h2v3h3v2h8V7h3V4h2v15h-3v5H7v-5H5V9h1z"/>
+<path fill="#d88d8b" d="M7 6h1v3h2v2H7zm15 0h1v5h-3V9h2z"/>
+<path fill="#ac8b56" d="M12 8h2v4h-2zm4 0h2v4h-2zM5 15h3v2H5zm16 0h3v2h-3z"/>
+<g class="cat-eyes" fill="#152017"><path d="M8 12h3v3H8zm10 0h3v3h-3z"/></g>
+<path fill="#efdcbc" d="M11 16h7v4h-7zM6 22h5v5H6zm12 0h5v5h-5z"/>
+<path fill="#bc7675" d="M13 16h3v2h-3z"/><path fill="#564831" d="M14 18h1v2h2v1h-3v-1h-2v-1h2z"/>
+<path fill="#e5d7b9" d="M0 14h6v1H0zm1 3h5v1H1zm22-3h6v1h-6zm0 3h5v1h-5z"/>
+<path class="cat-heart" d="M25 1h3v2h2V1h3v4h-2v2h-2v2h-2V7h-2z"/>
+</svg></button><span id="cat-bubble" class="cat-bubble" role="status" aria-live="polite"></span><div class="profile-top"><span>PLAYER PROFILE</span><span>01</span></div><div class="avatar-wrap"><span class="avatar-fallback" aria-hidden="true">TY</span><img id="avatar" src="https://github.com/phomaitrungmuoi.png?size=460" alt="黃泰英的 GitHub 頭像" width="300" height="300"></div><div class="profile-name">phomaitrungmuoi<span>STUDENT / EXPLORER</span><small class="student-id">學號 / ID 1141546</small></div><div class="profile-bottom"><span>YZU · 資工一年級</span><span class="tiny-blocks" aria-hidden="true">▪ ▪ ▪</span></div></aside>
 <div class="hero-bottom"><span>01 — A LITTLE WORLD OF MINE</span><a href="#about">SCROLL TO EXPLORE ↓</a></div>
 </section>
 <section class="section reveal" id="about"><div class="section-title"><p class="eyebrow">01 / ABOUT ME</p><h2>關於我<span>A little about me.</span></h2></div><div class="about-body"><p>2007 年出生，元智大學資工系一年級。喜歡貓咪、美食，還有認識新朋友、一起出去玩。</p><p class="english" lang="en">Born in 2007. First-year student at YZU. Cats, good food, new friends, and days out.</p><p class="cpe">CPE：曾解出 3 題。</p><div class="games-line"><h3>喜歡玩的遊戲 / Games &amp; platforms</h3><ul class="game-tags"><li>Yu-Gi-Oh! Master Duel</li><li>Brawl Stars</li><li>Steam</li></ul></div></div></section>
@@ -62,7 +88,7 @@
 </div>
 <div class="rail-controls"><span id="swipe-hint">左右滑動 / Swipe to explore</span><div class="rail-nav" hidden><button id="social-prev" type="button" aria-label="上一張 / Previous" aria-controls="social-track">←</button><span id="social-position" aria-live="polite" aria-atomic="true">01 / 06</span><button id="social-next" type="button" aria-label="下一張 / Next" aria-controls="social-track">→</button></div></div>
 </div></section>
-<section class="arcade" id="arcade" aria-labelledby="arcade-title"><div class="arcade-top"><h2 id="arcade-title">玩一下？<span>Four pixels. Tiny chickens.</span></h2><span class="arcade-score">SCORE <span id="game-score">0</span><br>CHANCES <span id="game-lives">3</span></span></div><div class="game-wrap"><canvas id="chicken-game" width="320" height="240" tabindex="0" aria-label="像素小雞遊戲。按開始後，以左右方向鍵或拖曳移動，自動發射。" aria-describedby="game-instructions">需要支援 Canvas 的瀏覽器才能遊玩。</canvas><div class="game-actions"><button id="game-start" type="button">開始 / Play</button><button id="game-pause" class="secondary" type="button" disabled>暫停 / Pause</button></div><p class="game-hint" id="game-instructions">← → 或拖曳移動 · 自動發射<br>Move with arrows or drag · Auto-fire</p><p id="game-status" role="status" aria-live="polite">擋住小雞，別讓 3 隻溜過去。 / Stop the chickens!</p></div></section>
+<section class="arcade" id="arcade" aria-labelledby="arcade-title"><div class="arcade-top"><h2 id="arcade-title">玩一下？<span>Four pixels. Tiny chickens.</span></h2><span class="arcade-score">SCORE <span id="game-score">0</span><br>HP <span id="game-lives">3</span><br>KILLS <span id="game-kills">0</span></span></div><div class="game-wrap"><div class="game-stage"><canvas id="chicken-game" width="320" height="240" tabindex="0" aria-label="像素小雞遊戲。按開始後，以左右方向鍵或拖曳移動，自動發射。" aria-describedby="game-instructions">需要支援 Canvas 的瀏覽器才能遊玩。</canvas><div id="upgrade-panel" class="upgrade-panel" role="group" aria-labelledby="upgrade-title" hidden><h3 id="upgrade-title">選擇升級 / Choose one</h3><div class="upgrade-choices"><button type="button" data-upgrade="shot">+1 子彈<span>+1 shot</span></button><button type="button" data-upgrade="drone">+1 小飛船<span>+1 drone</span></button><button type="button" data-upgrade="heal">+1.25 HP<span>回血 / Heal</span></button></div></div></div><div class="game-actions"><button id="game-start" type="button">開始 / Play</button><button id="game-pause" class="secondary" type="button" disabled>暫停 / Pause</button></div><p class="game-hint" id="game-instructions">← → 或拖曳移動 · 自動發射<br>Move with arrows or drag · Auto-fire</p><p id="game-status" role="status" aria-live="polite">準備好了？ / Ready?</p></div></section>
 </main><footer><span>© <span id="year">2026</span> HUANG TAI YING</span><span>Built block by block.</span><a href="#home">BACK TO TOP ↑</a></footer><div id="toast" role="status" aria-live="polite"></div>
 <script>
 (() => {
@@ -131,77 +157,195 @@
 })();</script>
 <script>
 (() => {
-  const canvas = document.getElementById('chicken-game'), ctx = canvas.getContext('2d');
-  const start = document.getElementById('game-start'), pause = document.getElementById('game-pause');
-  const scoreEl = document.getElementById('game-score'), livesEl = document.getElementById('game-lives'), status = document.getElementById('game-status');
-  if (!ctx) {start.disabled=true;status.textContent='此瀏覽器無法執行遊戲 / Canvas unavailable';return;}
-  let mode='idle', x=160, score=0, lives=3, bullets=[], chickens=[], shot=0, spawn=0, last=0, raf=0;
-  const keys = new Set();
-  const clamp = value => Math.max(12,Math.min(308,value));
-  function draw() {
+  const canvas=document.getElementById('chicken-game'),ctx=canvas.getContext('2d');
+  const start=document.getElementById('game-start'),pause=document.getElementById('game-pause');
+  const scoreEl=document.getElementById('game-score'),hpEl=document.getElementById('game-lives'),killsEl=document.getElementById('game-kills'),status=document.getElementById('game-status');
+  const panel=document.getElementById('upgrade-panel'),choices=Array.from(panel.querySelectorAll('button'));
+  if(!ctx){start.disabled=true;status.textContent='Canvas unavailable';return;}
+  const FIRE_INTERVAL=.25/.92; // 3.68 volleys/second: exactly 8% less than 4.
+  const keys=new Set();
+  let mode='idle',x=160,hp=3,score=0,kills=0,shots=1,drones=[],bullets=[],chickens=[],hazards=[],boss=null;
+  let nextUpgrade=50,nextBoss=150,bossIndex=0,shotClock=0,spawnClock=1,last=0,raf=0,elapsed=0,invulnerable=0,pointer=null,uid=0;
+  const clamp=(v,a=12,b=308)=>Math.max(a,Math.min(b,v));
+  const num=v=>Number(v.toFixed(2)).toString();
+  const sync=()=>{scoreEl.textContent=String(score);hpEl.textContent=num(hp);killsEl.textContent=String(kills);};
+  function difficulty(){
+    return {speed:18+Math.min(kills,150)*.075+Math.min(Math.max(kills-150,0),900)*.026,
+      interval:Math.max(.38,1.15-Math.min(kills,150)*.0022-Math.max(kills-150,0)*.00065),
+      gold:kills<25?0:Math.min(.23,.055+Math.max(kills-50,0)*.00025)};
+  }
+  function parts(){
+    if(!boss)return [];
+    const wings=boss.left>0||boss.right>0;
+    return wings?[...(boss.left>0?[{key:'left',x:boss.x-32,y:boss.y+4}]:[]),...(boss.right>0?[{key:'right',x:boss.x+32,y:boss.y+4}]:[])]:[{key:'core',x:boss.x,y:boss.y+9}];
+  }
+  function nearest(){
+    if(boss){const targets=parts();return targets.reduce((a,b)=>Math.abs(b.x-x)<Math.abs(a.x-x)?b:a,targets[0]);}
+    return chickens.filter(c=>c.hp>0).reduce((best,c)=>!best||c.y>best.y?c:best,null);
+  }
+  function dronePosition(i){return {x:clamp(x+(i%2?1:-1)*(18+Math.floor(i/2)*11),6,314),y:211-Math.floor(i/8)*7};}
+  function damage(amount){
+    hp=Math.max(0,hp-amount);
+    if(hp<=0){mode='over';keys.clear();cancelAnimationFrame(raf);pause.disabled=true;start.textContent='再玩一次 / Replay';status.textContent='Game over · '+score;panel.hidden=true;}
+  }
+  function beginBoss(){
+    bossIndex++;nextBoss+=150;
+    const wingHp=7+bossIndex*3,coreHp=12+bossIndex*6;
+    boss={x:160,y:39,left:wingHp,right:wingHp,core:coreHp,wingMax:wingHp,coreMax:coreHp,clock:3.2,warning:0,target:160,phase:0};
+    chickens=[];bullets=[];hazards=[];invulnerable=1;
+    status.textContent='BOSS '+bossIndex;
+  }
+  function finishBoss(){score+=25*bossIndex;boss=null;hazards=[];bullets=[];spawnClock=1.8;invulnerable=1;status.textContent='BOSS CLEAR';}
+  function requestUpgrade(){
+    mode='upgrade';keys.clear();cancelAnimationFrame(raf);pause.disabled=true;panel.hidden=false;status.textContent='選擇升級 / Choose one';choices[0].focus({preventScroll:true});
+  }
+  function checkMilestones(){
+    if(mode!=='playing')return;
+    if(kills>=nextUpgrade){requestUpgrade();return;}
+    if(!boss&&kills>=nextBoss)beginBoss();
+  }
+  function choose(kind){
+    if(mode!=='upgrade')return;
+    if(kind==='shot')shots++;
+    else if(kind==='drone')drones.push({clock:3});
+    else if(kind==='heal')hp+=1.25;
+    else return;
+    nextUpgrade+=50;sync();
+    if(kills>=nextUpgrade){choices[0].focus({preventScroll:true});return;}
+    panel.hidden=true;mode='paused';pause.disabled=false;
+    if(!boss&&kills>=nextBoss)beginBoss();
+    resume();
+  }
+  choices.forEach(button=>button.addEventListener('click',()=>choose(button.dataset.upgrade)));
+  function updateBoss(dt){
+    boss.x=160+Math.sin(elapsed*.65)*64;
+    if(boss.warning>0){
+      boss.warning-=dt;
+      if(boss.warning<=0){
+        const speed=56+Math.min(bossIndex-1,8)*5;
+        const origins=boss.phase%2?[boss.x-30,boss.x+30]:[boss.x];
+        origins.forEach(ox=>{const dx=boss.target-ox,dy=218-boss.y,len=Math.hypot(dx,dy);hazards.push({x:ox,y:boss.y+20,vx:dx/len*speed,vy:dy/len*speed});});
+        boss.phase++;boss.clock=Math.max(1.8,3.0-bossIndex*.12);
+      }
+    }else{
+      boss.clock-=dt;
+      if(boss.clock<=0){boss.warning=.9;boss.target=x;}
+    }
+  }
+  function step(dt){
+    if(mode!=='playing')return;
+    elapsed+=dt;invulnerable=Math.max(0,invulnerable-dt);
+    x=clamp(x+((keys.has('ArrowRight')||keys.has('d')?1:0)-(keys.has('ArrowLeft')||keys.has('a')?1:0))*180*dt);
+    shotClock-=dt;
+    if(shotClock<=0){
+      for(let i=0;i<shots;i++)bullets.push({x:clamp(x+(i-(shots-1)/2)*Math.min(7,100/Math.max(shots-1,1)),3,317),y:207,vx:0,vy:-230,damage:1});
+      shotClock+=FIRE_INTERVAL;
+    }
+    drones.forEach((drone,i)=>{
+      drone.clock-=dt;
+      if(drone.clock<=0){
+        const target=nearest();
+        if(target){const p=dronePosition(i);bullets.push({...p,vx:0,vy:-195,damage:1,homing:true,target});drone.clock=3;}
+        else drone.clock=0;
+      }
+    });
+    if(boss)updateBoss(dt);
+    else{
+      spawnClock-=dt;
+      if(spawnClock<=0){const d=difficulty(),gold=Math.random()<d.gold;chickens.push({id:++uid,x:16+Math.random()*288,y:-12,hp:gold?2:1,gold});spawnClock+=d.interval;}
+    }
+    const speed=difficulty().speed;
+    chickens.forEach(c=>c.y+=speed*dt*(c.gold?.86:1));
+    bullets.forEach(b=>{
+      if(b.homing){
+        let t=b.target;
+        if(boss)t=parts().find(p=>p.key===t?.key)||nearest();
+        else if(!t||t.hp<=0||!chickens.includes(t))t=nearest();
+        b.target=t;
+        if(t){const dx=t.x-b.x,dy=t.y-b.y,len=Math.hypot(dx,dy)||1;b.vx=dx/len*195;b.vy=dy/len*195;}
+      }
+      b.x+=b.vx*dt;b.y+=b.vy*dt;
+      if(boss){
+        const weak=parts().find(p=>Math.abs(p.x-b.x)<10&&Math.abs(p.y-b.y)<11);
+        if(weak){boss[weak.key]=Math.max(0,boss[weak.key]-b.damage);b.hit=true;}
+        else if(Math.abs(b.x-boss.x)<44&&b.y<boss.y+17&&b.y>boss.y-19)b.hit=true;
+      }else{
+        const c=chickens.find(c=>c.hp>0&&Math.abs(c.x-b.x)<10&&b.y<c.y+11&&b.y+5>c.y-6);
+        if(c){c.hp-=b.damage;b.hit=true;if(c.hp<=0){kills++;score+=c.gold?2:1;}}
+      }
+    });
+    if(boss&&boss.core<=0)finishBoss();
+    for(const c of chickens){if(c.hp>0&&c.y>=224){c.hp=0;damage(1);if(mode==='over')break;}}
+    hazards.forEach(h=>{
+      h.x+=h.vx*dt;h.y+=h.vy*dt;
+      if(Math.abs(h.x-x)<9&&Math.abs(h.y-218)<8){h.hit=true;if(invulnerable===0&&mode==='playing'){damage(.75);invulnerable=1.2;}}
+    });
+    chickens=chickens.filter(c=>c.hp>0);bullets=bullets.filter(b=>!b.hit&&b.y>-20&&b.y<250&&b.x>-20&&b.x<340);
+    hazards=hazards.filter(h=>!h.hit&&h.y<250&&h.x>-20&&h.x<340);
+    sync();checkMilestones();
+  }
+  function ship(px,py,size,color){ctx.fillStyle=color;[[0,-1],[-1,0],[0,0],[1,0]].forEach(([dx,dy])=>ctx.fillRect(Math.round(px)+dx*size-size/2,py+dy*size,size,size));}
+  function draw(){
     ctx.fillStyle='#101710';ctx.fillRect(0,0,320,240);
     ctx.fillStyle='#293d28';for(let i=0;i<22;i++)ctx.fillRect((i*73)%316,(i*41)%234,1,1);
     ctx.fillStyle='#48603b';ctx.fillRect(0,230,320,1);
-    // Four square pixels: one on top, three along the base.
-    ctx.fillStyle='#b4d88a';[[0,-6],[-6,0],[0,0],[6,0]].forEach(([dx,dy])=>ctx.fillRect(Math.round(x)+dx-3,218+dy,6,6));
-    ctx.fillStyle='#e9eab5';bullets.forEach(b=>ctx.fillRect(Math.round(b.x)-1,Math.round(b.y),2,5));
+    if(invulnerable===0||Math.floor(elapsed*8)%2===0)ship(x,218,6,'#b4d88a');
+    drones.forEach((d,i)=>{const p=dronePosition(i);ship(p.x,p.y,3,'#8bd3cf');});
+    bullets.forEach(b=>{ctx.fillStyle=b.homing?'#8bd3cf':'#e9eab5';ctx.fillRect(Math.round(b.x)-1,Math.round(b.y),2,b.homing?3:5);});
     chickens.forEach(c=>{
-      const cx=Math.round(c.x),cy=Math.round(c.y);
-      ctx.fillStyle='#ede8cc';ctx.fillRect(cx-6,cy,12,8);ctx.fillRect(cx+2,cy-4,6,5);ctx.fillRect(cx-9,cy+1,4,4);
-      ctx.fillStyle='#c77861';ctx.fillRect(cx+3,cy-6,3,2);
-      ctx.fillStyle='#cba35b';ctx.fillRect(cx+8,cy-1,3,2);ctx.fillRect(cx-3,cy+8,2,3);ctx.fillRect(cx+3,cy+8,2,3);
-      ctx.fillStyle='#172018';ctx.fillRect(cx+5,cy-2,1,1);
+      const cx=Math.round(c.x),cy=Math.round(c.y);ctx.fillStyle=c.gold?'#e6bc4b':'#ede8cc';ctx.fillRect(cx-6,cy,12,8);ctx.fillRect(cx+2,cy-4,6,5);ctx.fillRect(cx-9,cy+1,4,4);
+      ctx.fillStyle='#c77861';ctx.fillRect(cx+3,cy-6,3,2);ctx.fillStyle='#cba35b';ctx.fillRect(cx+8,cy-1,3,2);ctx.fillRect(cx-3,cy+8,2,3);ctx.fillRect(cx+3,cy+8,2,3);
+      ctx.fillStyle='#172018';ctx.fillRect(cx+5,cy-2,1,1);if(c.gold){ctx.fillStyle='#f5d977';for(let i=0;i<c.hp;i++)ctx.fillRect(cx-4+i*5,cy-10,3,2);}
     });
-    if(mode!=='playing'){
-      ctx.fillStyle='#101710bb';ctx.fillRect(0,85,320,54);ctx.fillStyle='#b4d88a';ctx.textAlign='center';ctx.font='12px monospace';
-      ctx.fillText(mode==='idle'?'4 PIXELS vs CHICKENS':mode==='paused'?'PAUSED':'SCORE  '+score,160,116);
+    if(boss){
+      const bx=Math.round(boss.x),by=boss.y;
+      ctx.fillStyle='#727767';ctx.fillRect(bx-22,by-15,44,31);ctx.fillRect(bx-44,by-6,22,18);ctx.fillRect(bx+22,by-6,22,18);
+      ctx.fillStyle='#b88a56';ctx.fillRect(bx-12,by-24,24,10);ctx.fillStyle='#c77861';ctx.fillRect(bx-6,by-29,12,5);
+      ctx.fillStyle='#101710';ctx.fillRect(bx-11,by-9,5,5);ctx.fillRect(bx+6,by-9,5,5);ctx.fillStyle='#e6bc4b';ctx.fillRect(bx-4,by-1,8,5);
+      parts().forEach(p=>{ctx.strokeStyle='#b4d88a';ctx.lineWidth=1;ctx.strokeRect(Math.round(p.x)-9,p.y-9,18,18);ctx.fillStyle='#b4d88a';ctx.fillRect(Math.round(p.x)-5,p.y-5,10,10);ctx.fillStyle='#101710';ctx.fillRect(Math.round(p.x)-2,p.y-2,4,4);});
+      const total=boss.wingMax*2+boss.coreMax,remaining=boss.left+boss.right+boss.core;
+      ctx.fillStyle='#384332';ctx.fillRect(72,7,176,3);ctx.fillStyle='#e6bc4b';ctx.fillRect(72,7,176*remaining/total,3);
+      if(boss.warning>0){ctx.strokeStyle='#c99567';ctx.setLineDash([3,6]);ctx.beginPath();ctx.moveTo(bx,by+20);ctx.lineTo(boss.target,218);ctx.stroke();ctx.setLineDash([]);ctx.strokeRect(Math.round(boss.target)-12,207,24,20);}
+    }
+    ctx.fillStyle='#e0a178';hazards.forEach(h=>ctx.fillRect(Math.round(h.x)-3,Math.round(h.y)-3,6,6));
+    if(mode!=='playing'&&mode!=='upgrade'){
+      ctx.fillStyle='#101710cc';ctx.fillRect(0,85,320,54);ctx.fillStyle='#b4d88a';ctx.textAlign='center';ctx.font='12px monospace';ctx.fillText(mode==='idle'?'4 PIXELS vs CHICKENS':mode==='paused'?'PAUSED':'SCORE  '+score,160,116);
     }
   }
-  function stop(message) {
-    if(mode!=='playing') return;
-    mode='paused';cancelAnimationFrame(raf);keys.clear();pause.textContent='繼續 / Resume';status.textContent=message;draw();
+  function loop(time){if(mode!=='playing')return;const dt=Math.min(Math.max((time-last)/1000,0),.035);last=time;step(dt);draw();if(mode==='playing')raf=requestAnimationFrame(loop);}
+  function stop(){if(mode!=='playing')return;mode='paused';cancelAnimationFrame(raf);keys.clear();pause.textContent='繼續 / Resume';status.textContent='已暫停 / Paused';draw();}
+  function resume(){cancelAnimationFrame(raf);mode='playing';last=performance.now();pause.textContent='暫停 / Pause';status.textContent=boss?'BOSS '+bossIndex:'遊戲中 / Playing';canvas.focus({preventScroll:true});raf=requestAnimationFrame(loop);}
+  function reset(){
+    cancelAnimationFrame(raf);x=160;hp=3;score=0;kills=0;shots=1;drones=[];bullets=[];chickens=[];hazards=[];boss=null;
+    nextUpgrade=50;nextBoss=150;bossIndex=0;shotClock=0;spawnClock=1;elapsed=0;invulnerable=0;uid=0;keys.clear();panel.hidden=true;pause.disabled=false;start.textContent='重新開始 / Restart';sync();resume();
   }
-  function step(dt) {
-    x=clamp(x+((keys.has('ArrowRight')||keys.has('d')?1:0)-(keys.has('ArrowLeft')||keys.has('a')?1:0))*180*dt);
-    shot-=dt;spawn-=dt;
-    if(shot<=0){bullets.push({x,y:209});shot=.25;}
-    if(spawn<=0){chickens.push({x:16+Math.random()*288,y:-12});spawn=Math.max(.45,1.0-score*.012);}
-    bullets.forEach(b=>b.y-=230*dt);chickens.forEach(c=>c.y+=(23+Math.min(score,40)*.8)*dt);
-    bullets.forEach(b=>{if(b.hit)return;const c=chickens.find(c=>!c.hit&&Math.abs(c.x-b.x)<10&&b.y<c.y+11&&b.y+5>c.y-6);if(c){c.hit=true;b.hit=true;score++;}});
-    chickens.forEach(c=>{if(!c.hit&&c.y>=215){c.hit=true;lives=Math.max(0,lives-1);}});
-    chickens=chickens.filter(c=>!c.hit);bullets=bullets.filter(b=>!b.hit&&b.y>-6);
-    scoreEl.textContent=String(score);livesEl.textContent=String(lives);
-    if(lives===0){mode='over';keys.clear();pause.disabled=true;start.textContent='再玩一次 / Replay';status.textContent='遊戲結束 / Game over · Score '+score;}
-  }
-  function loop(time) {
-    if(mode!=='playing')return;
-    const dt=Math.min((time-last)/1000,.035);last=time;step(dt);draw();
-    if(mode==='playing')raf=requestAnimationFrame(loop);
-  }
-  function resume() {mode='playing';last=performance.now();pause.textContent='暫停 / Pause';status.textContent='遊戲中 / Playing';canvas.focus({preventScroll:true});raf=requestAnimationFrame(loop);}
-  start.addEventListener('click',()=>{
-    cancelAnimationFrame(raf);x=160;score=0;lives=3;bullets=[];chickens=[];shot=0;spawn=.4;keys.clear();
-    scoreEl.textContent='0';livesEl.textContent='3';pause.disabled=false;start.textContent='重新開始 / Restart';resume();
-  });
-  pause.addEventListener('click',()=>{if(mode==='playing')stop('已暫停 / Paused');else if(mode==='paused')resume();});
-  canvas.addEventListener('keydown',e=>{
-    if(['ArrowLeft','ArrowRight','a','d'].includes(e.key)){if(mode==='playing'){e.preventDefault();keys.add(e.key);}}
-    if((e.key===' '||e.key==='Escape')&&mode==='playing'){e.preventDefault();stop('已暫停 / Paused');}
-  });
-  window.addEventListener('keyup',e=>keys.delete(e.key));
-  canvas.addEventListener('blur',()=>keys.clear());
-  let pointer=null;
+  start.addEventListener('click',reset);pause.addEventListener('click',()=>{if(mode==='playing')stop();else if(mode==='paused')resume();});
+  canvas.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','a','d'].includes(e.key)&&mode==='playing'){e.preventDefault();keys.add(e.key);}if((e.key===' '||e.key==='Escape')&&mode==='playing'){e.preventDefault();stop();}});
+  window.addEventListener('keyup',e=>keys.delete(e.key));canvas.addEventListener('blur',()=>keys.clear());
   const aim=e=>{const r=canvas.getBoundingClientRect();x=clamp((e.clientX-r.left)*320/r.width);};
   canvas.addEventListener('pointerdown',e=>{if(mode!=='playing')return;pointer=e.pointerId;canvas.setPointerCapture(pointer);aim(e);canvas.focus({preventScroll:true});});
   canvas.addEventListener('pointermove',e=>{if(pointer===e.pointerId&&mode==='playing')aim(e);});
   const release=e=>{if(pointer===e.pointerId){if(canvas.hasPointerCapture(pointer))canvas.releasePointerCapture(pointer);pointer=null;}};
   canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop('已暫停 / Paused');});
-  window.addEventListener('blur',()=>stop('已暫停 / Paused'));
-  if('IntersectionObserver' in window)new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)stop('已暫停 / Paused');}).observe(canvas);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('blur',stop);
+  if('IntersectionObserver'in window)new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)stop();}).observe(canvas);
   draw();
+})();
+
+</script>
+<script>
+(() => {
+  const cat=document.getElementById('profile-cat'),bubble=document.getElementById('cat-bubble');
+  const replies=['喵～ / meow','呼嚕呼嚕 / purr','再摸一下？','meow ♡'];
+  let count=0,timer;
+  cat.addEventListener('click',()=>{
+    clearTimeout(timer);cat.classList.remove('petted');void cat.offsetWidth;cat.classList.add('petted');
+    bubble.textContent=replies[count++%replies.length];bubble.classList.add('show');
+    timer=setTimeout(()=>{cat.classList.remove('petted');bubble.classList.remove('show');},1600);
+  });
 })();</script>
 </body></html>
+
 
 
 
