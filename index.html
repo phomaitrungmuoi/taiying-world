@@ -24,6 +24,18 @@
 .social-card .slot-action:hover{background:#3c512f}.rail-controls{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:18px}.rail-controls>span{font-size:12px;color:var(--muted)}
 .rail-nav{display:flex;align-items:center;gap:14px;flex-shrink:0}.rail-nav[hidden]{display:none}.rail-nav button{width:44px;height:44px;border:1px solid #718455;background:#192219;color:var(--green);box-shadow:3px 3px 0 #0b110c;font:22px var(--mono)}.rail-nav button:disabled{opacity:.35;cursor:default;box-shadow:none}.rail-nav span{font:12px var(--mono);color:var(--green)}
 @media(max-width:580px){.social-card{flex-basis:82%;padding:24px 18px 18px}.rail-controls{flex-wrap:wrap}.rail-controls>span{width:100%}.rail-nav{margin-left:auto}.contact-heading{margin-bottom:20px}}
+
+.profile{position:relative}.peek-cat{position:absolute;right:24px;top:-37px;width:58px;height:44px;z-index:2;image-rendering:pixelated;animation:cat-peek 7s steps(2,end) infinite;transform-origin:bottom}
+.profile:hover .peek-cat{animation-play-state:paused}.student-id{display:block;font:12px/1.8 var(--mono);color:var(--green);margin-top:8px}
+@keyframes cat-peek{0%,65%,100%{transform:translateY(5px)}70%,90%{transform:translateY(-3px)}}
+.arcade{margin:0 40px 64px;padding:32px;border:1px solid var(--line);background:#192219}
+.arcade-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}.arcade h2{font-size:26px}.arcade h2 span{font-size:13px;margin-top:8px}.arcade-score{font:13px var(--mono);color:var(--green);white-space:nowrap}
+.game-wrap{max-width:480px;margin:auto}#chicken-game{display:block;width:100%;height:auto;aspect-ratio:4/3;background:#101710;border:2px solid #526441;image-rendering:pixelated;touch-action:none}
+.game-actions{display:flex;gap:12px;align-items:center;justify-content:center;margin:16px 0}
+.game-actions button{font:14px/1.5 var(--mono);background:#b4d88a;color:#152010;border:1px solid #b4d88a;box-shadow:3px 3px 0 #080d09;padding:10px 16px;min-height:44px}
+.game-actions button:disabled{opacity:.4;cursor:default}.game-actions button.secondary{background:transparent;color:var(--green)}
+.game-hint,#game-status{text-align:center;font-size:13px;line-height:1.7;color:var(--muted);margin:8px 0}#game-status{min-height:23px;color:var(--green)}
+@media(max-width:580px){.arcade{margin:0 16px 40px;padding:22px 16px}.arcade-top{align-items:flex-start}.arcade h2{font-size:22px}.arcade-score{font-size:11px;line-height:1.8}.peek-cat{right:18px}}
 </style>
 </head>
 <body>
@@ -32,7 +44,7 @@
 <main id="main">
 <section class="hero" id="home">
 <div class="hero-copy"><p class="eyebrow">HELLO, WORLD. <span>你好，世界。</span></p><h1>黃泰英<span>Huang Tai Ying<span class="cursor">_</span></span></h1><p class="role">元智大學 資訊工程學系<br><span>Computer Science · Yuan Ze University</span></p><p class="intro">i'm a ghoti</p><div class="actions"><a class="button primary" href="#about">認識我 <span>Explore ↓</span></a><a class="button" href="https://github.com/phomaitrungmuoi" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div>
-<aside class="profile"><div class="profile-top"><span>PLAYER PROFILE</span><span>01</span></div><div class="avatar-wrap"><span class="avatar-fallback" aria-hidden="true">TY</span><img id="avatar" src="https://github.com/phomaitrungmuoi.png?size=460" alt="黃泰英的 GitHub 頭像" width="300" height="300"></div><div class="profile-name">phomaitrungmuoi<span>STUDENT / EXPLORER</span></div><div class="profile-bottom"><span>YZU · 資工一年級</span><span class="tiny-blocks" aria-hidden="true">▪ ▪ ▪</span></div></aside>
+<aside class="profile"><svg class="peek-cat" viewBox="0 0 20 16" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#0c120e" d="M2 1h5v3h6V1h5v12h-2v3H4v-3H2z"/><path fill="#d5ba85" d="M3 2h3v4h8V2h3v11H3z"/><path fill="#d8908c" d="M4 3h1v2H4zm11 0h1v2h-1z"/><path fill="#101710" d="M5 8h2v2H5zm8 0h2v2h-2zM9 11h2v1H9z"/><path fill="#f0dfba" d="M3 13h4v3H3zm10 0h4v3h-4z"/></svg><div class="profile-top"><span>PLAYER PROFILE</span><span>01</span></div><div class="avatar-wrap"><span class="avatar-fallback" aria-hidden="true">TY</span><img id="avatar" src="https://github.com/phomaitrungmuoi.png?size=460" alt="黃泰英的 GitHub 頭像" width="300" height="300"></div><div class="profile-name">phomaitrungmuoi<span>STUDENT / EXPLORER</span><small class="student-id">學號 / ID 1141546</small></div><div class="profile-bottom"><span>YZU · 資工一年級</span><span class="tiny-blocks" aria-hidden="true">▪ ▪ ▪</span></div></aside>
 <div class="hero-bottom"><span>01 — A LITTLE WORLD OF MINE</span><a href="#about">SCROLL TO EXPLORE ↓</a></div>
 </section>
 <section class="section reveal" id="about"><div class="section-title"><p class="eyebrow">01 / ABOUT ME</p><h2>關於我<span>A little about me.</span></h2></div><div class="about-body"><p>2007 年出生，元智大學資工系一年級。喜歡貓咪、美食，還有認識新朋友、一起出去玩。</p><p class="english" lang="en">Born in 2007. First-year student at YZU. Cats, good food, new friends, and days out.</p><p class="cpe">CPE：曾解出 3 題。</p><div class="games-line"><h3>喜歡玩的遊戲 / Games &amp; platforms</h3><ul class="game-tags"><li>Yu-Gi-Oh! Master Duel</li><li>Brawl Stars</li><li>Steam</li></ul></div></div></section>
@@ -41,14 +53,16 @@
 <div class="contact-heading"><h2 id="contact-title">認識一下？<span>Find me here.</span></h2><p>聊聊日常，或一起玩遊戲。</p></div>
 <div class="contact-carousel" role="region" aria-roledescription="carousel" aria-label="社群與聯絡方式">
 <div class="social-track" id="social-track" tabindex="0" aria-label="聯絡卡片，可左右滑動" aria-describedby="swipe-hint">
-<article class="social-card" role="group" aria-label="1 / 5 — Instagram"><span class="slot-number">01</span><span class="pixel-app ig"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#d35895" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#ef9b65" d="M0 24h32v4h-4v4H4v-4H0z"/><path fill="#fff4dc" d="M9 6h14v2h3v16h-3v2H9v-2H6V9h3zm1 3v2H9v11h2v1h11v-2h1V11h-2V9z"/><path fill="#fff4dc" d="M14 11h5v2h2v7h-2v2h-6v-2h-2v-6h3zm0 4v4h4v-4zm7-5h3v3h-3z"/></svg></span><h3>Instagram</h3><p>@_hta_1312</p><a class="slot-action" href="https://www.instagram.com/_hta_1312/" target="_blank" rel="noopener noreferrer">看看日常 ↗</a></article>
-<article class="social-card" role="group" aria-label="2 / 5 — Facebook"><span class="slot-number">02</span><span class="pixel-app fb"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#477ee0" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#f4f6ff" d="M17 6h8v5h-6v5h6v5h-6v11h-6V21H9v-5h4V10h2V8h2z"/></svg></span><h3>Facebook</h3><p>Huang Tai Ying</p><a class="slot-action" href="https://www.facebook.com/share/1HAtWhSL4w/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">打個招呼 ↗</a></article>
-<article class="social-card" role="group" aria-label="3 / 5 — Steam"><span class="slot-number">03</span><span class="pixel-app steam"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#284d6b" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#e6eff4" d="M20 5h7v2h2v8h-2v2h-6v-2h-3V8h2zm2 3v2h-1v3h2v1h2v-2h1V9h-1V8zM0 18h5v2h5v2h4v-4h3v-3h4v5h-3v4h-2v4H9v-2H5v-3H0z"/><path fill="#284d6b" d="M10 23h4v3h-4z"/></svg></span><h3>Steam</h3><p><span class="friend-caption">FRIEND CODE</span><span class="friend-code">1341861520</span></p><button class="slot-action" type="button" id="copy-steam">複製好友代碼 / Copy</button></article>
-<article class="social-card" role="group" aria-label="4 / 5 — Email"><span class="slot-number">04</span><span class="pixel-app mail"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#8ba668" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#faf2d5" d="M5 8h22v17H5zm3 3v2h3v2h3v2h4v-2h3v-2h3v-2zm0 6v5h16v-5h-3v2h-3v2h-4v-2h-3v-2z"/></svg></span><h3>Email</h3><p><a href="mailto:phomaitrungmuoi@gmail.com">phomaitrungmuoi@gmail.com</a></p><button class="slot-action copy" data-copy="phomaitrungmuoi@gmail.com" type="button">複製信箱 / Copy</button></article>
-<article class="social-card" role="group" aria-label="5 / 5 — YZU Mail"><span class="slot-number">05</span><span class="pixel-app mail"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#8ba668" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#faf2d5" d="M5 8h22v17H5zm3 3v2h3v2h3v2h4v-2h3v-2h3v-2zm0 6v5h16v-5h-3v2h-3v2h-4v-2h-3v-2z"/></svg></span><h3>YZU Mail</h3><p><a href="mailto:s1141546@yzu.edu.tw">s1141546@yzu.edu.tw</a></p><button class="slot-action copy" data-copy="s1141546@yzu.edu.tw" type="button">複製信箱 / Copy</button></article>
+<article class="social-card" role="group" aria-label="1 / 6 — Instagram"><span class="slot-number">01</span><span class="pixel-app ig"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#d35895" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#ef9b65" d="M0 24h32v4h-4v4H4v-4H0z"/><path fill="#fff4dc" d="M9 6h14v2h3v16h-3v2H9v-2H6V9h3zm1 3v2H9v11h2v1h11v-2h1V11h-2V9z"/><path fill="#fff4dc" d="M14 11h5v2h2v7h-2v2h-6v-2h-2v-6h3zm0 4v4h4v-4zm7-5h3v3h-3z"/></svg></span><h3>Instagram</h3><p>@_hta_1312</p><a class="slot-action" href="https://www.instagram.com/_hta_1312/" target="_blank" rel="noopener noreferrer">看看日常 ↗</a></article>
+<article class="social-card" role="group" aria-label="2 / 6 — Facebook"><span class="slot-number">02</span><span class="pixel-app fb"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#477ee0" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#f4f6ff" d="M17 6h8v5h-6v5h6v5h-6v11h-6V21H9v-5h4V10h2V8h2z"/></svg></span><h3>Facebook</h3><p>Huang Tai Ying</p><a class="slot-action" href="https://www.facebook.com/share/1HAtWhSL4w/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">打個招呼 ↗</a></article>
+<article class="social-card" role="group" aria-label="3 / 6 — Discord"><span class="slot-number">03</span><span class="pixel-app discord"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#5865f2" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#f1efff" d="M8 8h5v2h6V8h5v3h2v4h2v9h-5v-2H9v2H4v-9h2v-4h2z"/><path fill="#5865f2" d="M9 14h4v5H9zm10 0h4v5h-4zM12 23h8v2h-8z"/></svg></span><h3>Discord</h3><p>一起聊天、玩遊戲。</p><a class="slot-action" href="https://discord.gg/tUbKAQcD" target="_blank" rel="noopener noreferrer">加入 Discord ↗</a></article>
+<article class="social-card" role="group" aria-label="4 / 6 — Steam"><span class="slot-number">04</span><span class="pixel-app steam"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#284d6b" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#e6eff4" d="M20 5h7v2h2v8h-2v2h-6v-2h-3V8h2zm2 3v2h-1v3h2v1h2v-2h1V9h-1V8zM0 18h5v2h5v2h4v-4h3v-3h4v5h-3v4h-2v4H9v-2H5v-3H0z"/><path fill="#284d6b" d="M10 23h4v3h-4z"/></svg></span><h3>Steam</h3><p><span class="friend-caption">FRIEND CODE</span><span class="friend-code">1341861520</span></p><button class="slot-action" type="button" id="copy-steam">複製好友代碼 / Copy</button></article>
+<article class="social-card" role="group" aria-label="5 / 6 — Email"><span class="slot-number">05</span><span class="pixel-app mail"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#8ba668" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#faf2d5" d="M5 8h22v17H5zm3 3v2h3v2h3v2h4v-2h3v-2h3v-2zm0 6v5h16v-5h-3v2h-3v2h-4v-2h-3v-2z"/></svg></span><h3>Email</h3><p><a href="mailto:phomaitrungmuoi@gmail.com">phomaitrungmuoi@gmail.com</a></p><button class="slot-action copy" data-copy="phomaitrungmuoi@gmail.com" type="button">複製信箱 / Copy</button></article>
+<article class="social-card" role="group" aria-label="6 / 6 — YZU Mail"><span class="slot-number">06</span><span class="pixel-app mail"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#8ba668" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#faf2d5" d="M5 8h22v17H5zm3 3v2h3v2h3v2h4v-2h3v-2h3v-2zm0 6v5h16v-5h-3v2h-3v2h-4v-2h-3v-2z"/></svg></span><h3>YZU Mail</h3><p><a href="mailto:s1141546@yzu.edu.tw">s1141546@yzu.edu.tw</a></p><button class="slot-action copy" data-copy="s1141546@yzu.edu.tw" type="button">複製信箱 / Copy</button></article>
 </div>
-<div class="rail-controls"><span id="swipe-hint">左右滑動 / Swipe to explore</span><div class="rail-nav" hidden><button id="social-prev" type="button" aria-label="上一張 / Previous" aria-controls="social-track">←</button><span id="social-position" aria-live="polite" aria-atomic="true">01 / 05</span><button id="social-next" type="button" aria-label="下一張 / Next" aria-controls="social-track">→</button></div></div>
+<div class="rail-controls"><span id="swipe-hint">左右滑動 / Swipe to explore</span><div class="rail-nav" hidden><button id="social-prev" type="button" aria-label="上一張 / Previous" aria-controls="social-track">←</button><span id="social-position" aria-live="polite" aria-atomic="true">01 / 06</span><button id="social-next" type="button" aria-label="下一張 / Next" aria-controls="social-track">→</button></div></div>
 </div></section>
+<section class="arcade" id="arcade" aria-labelledby="arcade-title"><div class="arcade-top"><h2 id="arcade-title">玩一下？<span>Four pixels. Tiny chickens.</span></h2><span class="arcade-score">SCORE <span id="game-score">0</span><br>CHANCES <span id="game-lives">3</span></span></div><div class="game-wrap"><canvas id="chicken-game" width="320" height="240" tabindex="0" aria-label="像素小雞遊戲。按開始後，以左右方向鍵或拖曳移動，自動發射。" aria-describedby="game-instructions">需要支援 Canvas 的瀏覽器才能遊玩。</canvas><div class="game-actions"><button id="game-start" type="button">開始 / Play</button><button id="game-pause" class="secondary" type="button" disabled>暫停 / Pause</button></div><p class="game-hint" id="game-instructions">← → 或拖曳移動 · 自動發射<br>Move with arrows or drag · Auto-fire</p><p id="game-status" role="status" aria-live="polite">擋住小雞，別讓 3 隻溜過去。 / Stop the chickens!</p></div></section>
 </main><footer><span>© <span id="year">2026</span> HUANG TAI YING</span><span>Built block by block.</span><a href="#home">BACK TO TOP ↑</a></footer><div id="toast" role="status" aria-live="polite"></div>
 <script>
 (() => {
@@ -69,7 +83,7 @@
     if (max > 2 && track.scrollLeft >= max - 2) nearest = cards.length - 1;
     prev.disabled = track.scrollLeft <= 2;
     next.disabled = track.scrollLeft >= max - 2;
-    position.textContent = String(nearest + 1).padStart(2, '0') + ' / 05';
+    position.textContent = String(nearest + 1).padStart(2, '0') + ' / ' + String(cards.length).padStart(2, '0');
   };
   const move = direction => {
     const left = track.scrollLeft;
@@ -115,6 +129,79 @@
     clearTimeout(reset);reset=setTimeout(()=>{copy.textContent='複製好友代碼 / Copy';},3000);
   });
 })();</script>
+<script>
+(() => {
+  const canvas = document.getElementById('chicken-game'), ctx = canvas.getContext('2d');
+  const start = document.getElementById('game-start'), pause = document.getElementById('game-pause');
+  const scoreEl = document.getElementById('game-score'), livesEl = document.getElementById('game-lives'), status = document.getElementById('game-status');
+  if (!ctx) {start.disabled=true;status.textContent='此瀏覽器無法執行遊戲 / Canvas unavailable';return;}
+  let mode='idle', x=160, score=0, lives=3, bullets=[], chickens=[], shot=0, spawn=0, last=0, raf=0;
+  const keys = new Set();
+  const clamp = value => Math.max(12,Math.min(308,value));
+  function draw() {
+    ctx.fillStyle='#101710';ctx.fillRect(0,0,320,240);
+    ctx.fillStyle='#293d28';for(let i=0;i<22;i++)ctx.fillRect((i*73)%316,(i*41)%234,1,1);
+    ctx.fillStyle='#48603b';ctx.fillRect(0,230,320,1);
+    // Four square pixels: one on top, three along the base.
+    ctx.fillStyle='#b4d88a';[[0,-6],[-6,0],[0,0],[6,0]].forEach(([dx,dy])=>ctx.fillRect(Math.round(x)+dx-3,218+dy,6,6));
+    ctx.fillStyle='#e9eab5';bullets.forEach(b=>ctx.fillRect(Math.round(b.x)-1,Math.round(b.y),2,5));
+    chickens.forEach(c=>{
+      const cx=Math.round(c.x),cy=Math.round(c.y);
+      ctx.fillStyle='#ede8cc';ctx.fillRect(cx-6,cy,12,8);ctx.fillRect(cx+2,cy-4,6,5);ctx.fillRect(cx-9,cy+1,4,4);
+      ctx.fillStyle='#c77861';ctx.fillRect(cx+3,cy-6,3,2);
+      ctx.fillStyle='#cba35b';ctx.fillRect(cx+8,cy-1,3,2);ctx.fillRect(cx-3,cy+8,2,3);ctx.fillRect(cx+3,cy+8,2,3);
+      ctx.fillStyle='#172018';ctx.fillRect(cx+5,cy-2,1,1);
+    });
+    if(mode!=='playing'){
+      ctx.fillStyle='#101710bb';ctx.fillRect(0,85,320,54);ctx.fillStyle='#b4d88a';ctx.textAlign='center';ctx.font='12px monospace';
+      ctx.fillText(mode==='idle'?'4 PIXELS vs CHICKENS':mode==='paused'?'PAUSED':'SCORE  '+score,160,116);
+    }
+  }
+  function stop(message) {
+    if(mode!=='playing') return;
+    mode='paused';cancelAnimationFrame(raf);keys.clear();pause.textContent='繼續 / Resume';status.textContent=message;draw();
+  }
+  function step(dt) {
+    x=clamp(x+((keys.has('ArrowRight')||keys.has('d')?1:0)-(keys.has('ArrowLeft')||keys.has('a')?1:0))*180*dt);
+    shot-=dt;spawn-=dt;
+    if(shot<=0){bullets.push({x,y:209});shot=.25;}
+    if(spawn<=0){chickens.push({x:16+Math.random()*288,y:-12});spawn=Math.max(.45,1.0-score*.012);}
+    bullets.forEach(b=>b.y-=230*dt);chickens.forEach(c=>c.y+=(23+Math.min(score,40)*.8)*dt);
+    bullets.forEach(b=>{if(b.hit)return;const c=chickens.find(c=>!c.hit&&Math.abs(c.x-b.x)<10&&b.y<c.y+11&&b.y+5>c.y-6);if(c){c.hit=true;b.hit=true;score++;}});
+    chickens.forEach(c=>{if(!c.hit&&c.y>=215){c.hit=true;lives=Math.max(0,lives-1);}});
+    chickens=chickens.filter(c=>!c.hit);bullets=bullets.filter(b=>!b.hit&&b.y>-6);
+    scoreEl.textContent=String(score);livesEl.textContent=String(lives);
+    if(lives===0){mode='over';keys.clear();pause.disabled=true;start.textContent='再玩一次 / Replay';status.textContent='遊戲結束 / Game over · Score '+score;}
+  }
+  function loop(time) {
+    if(mode!=='playing')return;
+    const dt=Math.min((time-last)/1000,.035);last=time;step(dt);draw();
+    if(mode==='playing')raf=requestAnimationFrame(loop);
+  }
+  function resume() {mode='playing';last=performance.now();pause.textContent='暫停 / Pause';status.textContent='遊戲中 / Playing';canvas.focus({preventScroll:true});raf=requestAnimationFrame(loop);}
+  start.addEventListener('click',()=>{
+    cancelAnimationFrame(raf);x=160;score=0;lives=3;bullets=[];chickens=[];shot=0;spawn=.4;keys.clear();
+    scoreEl.textContent='0';livesEl.textContent='3';pause.disabled=false;start.textContent='重新開始 / Restart';resume();
+  });
+  pause.addEventListener('click',()=>{if(mode==='playing')stop('已暫停 / Paused');else if(mode==='paused')resume();});
+  canvas.addEventListener('keydown',e=>{
+    if(['ArrowLeft','ArrowRight','a','d'].includes(e.key)){if(mode==='playing'){e.preventDefault();keys.add(e.key);}}
+    if((e.key===' '||e.key==='Escape')&&mode==='playing'){e.preventDefault();stop('已暫停 / Paused');}
+  });
+  window.addEventListener('keyup',e=>keys.delete(e.key));
+  canvas.addEventListener('blur',()=>keys.clear());
+  let pointer=null;
+  const aim=e=>{const r=canvas.getBoundingClientRect();x=clamp((e.clientX-r.left)*320/r.width);};
+  canvas.addEventListener('pointerdown',e=>{if(mode!=='playing')return;pointer=e.pointerId;canvas.setPointerCapture(pointer);aim(e);canvas.focus({preventScroll:true});});
+  canvas.addEventListener('pointermove',e=>{if(pointer===e.pointerId&&mode==='playing')aim(e);});
+  const release=e=>{if(pointer===e.pointerId){if(canvas.hasPointerCapture(pointer))canvas.releasePointerCapture(pointer);pointer=null;}};
+  canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop('已暫停 / Paused');});
+  window.addEventListener('blur',()=>stop('已暫停 / Paused'));
+  if('IntersectionObserver' in window)new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)stop('已暫停 / Paused');}).observe(canvas);
+  draw();
+})();</script>
 </body></html>
+
 
 
