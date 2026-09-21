@@ -30,7 +30,7 @@
 @keyframes cat-peek{0%,65%,100%{transform:translateY(5px)}70%,90%{transform:translateY(-3px)}}
 .arcade{margin:0 40px 64px;padding:32px;border:1px solid var(--line);background:#192219}
 .arcade-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}.arcade h2{font-size:26px}.arcade h2 span{font-size:13px;margin-top:8px}.arcade-score{font:13px var(--mono);color:var(--green);white-space:nowrap}
-.game-wrap{max-width:480px;margin:auto}#chicken-game{display:block;width:100%;height:auto;aspect-ratio:4/3;background:#101710;border:2px solid #526441;image-rendering:pixelated;touch-action:none}
+.game-wrap{max-width:480px;margin:auto}#miner-game{display:block;width:100%;height:auto;aspect-ratio:4/3;background:#101710;border:2px solid #526441;image-rendering:pixelated;touch-action:none}
 .game-actions{display:flex;gap:12px;align-items:center;justify-content:center;margin:16px 0}
 .game-actions button{font:14px/1.5 var(--mono);background:#b4d88a;color:#152010;border:1px solid #b4d88a;box-shadow:3px 3px 0 #080d09;padding:10px 16px;min-height:44px}
 .game-actions button:disabled{opacity:.4;cursor:default}.game-actions button.secondary{background:transparent;color:var(--green)}
@@ -45,10 +45,6 @@ button.peek-cat{padding:0;border:0;background:transparent;cursor:pointer;width:8
 @keyframes tail-sway{50%{transform:rotate(10deg)}}@keyframes cat-blink{0%,92%,96%,100%{transform:scaleY(1)}93%,95%{transform:scaleY(.15)}}
 @keyframes cat-hop{50%{transform:translateY(-7px) rotate(-4deg)}}@keyframes cat-heart{10%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
 .arcade-score{line-height:1.8}.game-stage{position:relative}
-.upgrade-panel{position:absolute;inset:0;padding:18px;background:#101710ed;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;border:2px solid #859c61}
-.upgrade-panel[hidden]{display:none}.upgrade-panel h3{margin:0 0 4px;font:14px/1.4 var(--mono);color:var(--green)}.upgrade-choices{display:flex;gap:10px;width:100%}
-.upgrade-choices button{flex:1;min-width:0;min-height:76px;padding:12px 4px;background:#283721;border:2px solid #718853;color:var(--text);font:14px/1.6 'Noto Sans TC',sans-serif;box-shadow:3px 3px #080f08}.upgrade-choices button:hover{background:#405433}.upgrade-choices button span{display:block;font:12px/1.5 var(--mono);color:var(--green)}
-@media(max-width:420px){.upgrade-panel{padding:10px;gap:8px}.upgrade-choices{gap:6px}.upgrade-choices button{font-size:12px;min-height:68px}.upgrade-choices button span{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.cat-eyes,.cat-tail,.peek-cat.petted,.cat-heart{animation:none!important}.peek-cat.petted .cat-heart{opacity:1}}
 
 </style>
@@ -88,7 +84,10 @@ button.peek-cat{padding:0;border:0;background:transparent;cursor:pointer;width:8
 </div>
 <div class="rail-controls"><span id="swipe-hint">左右滑動 / Swipe to explore</span><div class="rail-nav" hidden><button id="social-prev" type="button" aria-label="上一張 / Previous" aria-controls="social-track">←</button><span id="social-position" aria-live="polite" aria-atomic="true">01 / 06</span><button id="social-next" type="button" aria-label="下一張 / Next" aria-controls="social-track">→</button></div></div>
 </div></section>
-<section class="arcade" id="arcade" aria-labelledby="arcade-title"><div class="arcade-top"><h2 id="arcade-title">玩一下？<span>Four pixels. Tiny chickens.</span></h2><span class="arcade-score">HP <span id="game-lives">3</span><br>KILLS <span id="game-kills">0</span><br>DRONES <span id="game-drones">0/4</span></span></div><div class="game-wrap"><div class="game-stage"><canvas id="chicken-game" width="320" height="240" tabindex="0" aria-label="像素小雞遊戲。按開始後，以左右方向鍵或拖曳移動，自動發射。" aria-describedby="game-instructions">需要支援 Canvas 的瀏覽器才能遊玩。</canvas><div id="upgrade-panel" class="upgrade-panel" role="group" aria-labelledby="upgrade-title" hidden><h3 id="upgrade-title">選擇升級 / Choose one</h3><div class="upgrade-choices"><button type="button" data-upgrade="shot">+1 子彈<span>Fan shot</span></button><button type="button" data-upgrade="rate">+10% 射速<span>Fire rate</span></button><button type="button" data-upgrade="damage">+10% 傷害<span>Damage</span></button></div></div></div><div class="game-actions"><button id="game-start" type="button">開始 / Play</button><button id="game-pause" class="secondary" type="button" disabled>暫停 / Pause</button></div><p class="game-hint" id="game-instructions">← → 或拖曳移動 · 自動發射<br>Move with arrows or drag · Auto-fire</p><p id="game-status" role="status" aria-live="polite">準備好了？ / Ready?</p></div></section>
+<section class="arcade" id="arcade" aria-labelledby="arcade-title">
+<div class="arcade-top"><h2 id="arcade-title">挖一下？<span>Pixel Miner · 45 second run.</span></h2><span class="arcade-score">SCORE <span id="game-score">0</span><br>TIME <span id="game-time">45</span><br>BEST <span id="game-best">0</span></span></div>
+<div class="game-wrap"><div class="game-stage"><canvas id="miner-game" width="320" height="240" tabindex="0" aria-label="像素挖礦遊戲。左右移動收集礦石並避開 TNT。" aria-describedby="game-instructions">需要支援 Canvas 的瀏覽器才能遊玩。</canvas></div><div class="game-actions"><button id="game-start" type="button">開始 / Play</button><button id="game-pause" class="secondary" type="button" disabled>暫停 / Pause</button></div><p class="game-hint" id="game-instructions">← → 或拖曳移動 · 收集礦石 · 避開 TNT<br>Move with arrows or drag · Catch ores · Avoid TNT</p><p id="game-status" role="status" aria-live="polite">準備好了？ / Ready?</p></div>
+</section>
 </main><footer><span>© <span id="year">2026</span> HUANG TAI YING</span><span>Built block by block.</span><a href="#home">BACK TO TOP ↑</a></footer><div id="toast" role="status" aria-live="polite"></div>
 
 
@@ -170,158 +169,194 @@ button.peek-cat{padding:0;border:0;background:transparent;cursor:pointer;width:8
 <script>
 (() => {
   'use strict';
-  const canvas=document.getElementById('chicken-game'),ctx=canvas.getContext('2d');
-  const start=document.getElementById('game-start'),pause=document.getElementById('game-pause');
-  const hpEl=document.getElementById('game-lives'),killsEl=document.getElementById('game-kills'),droneEl=document.getElementById('game-drones'),status=document.getElementById('game-status');
-  const panel=document.getElementById('upgrade-panel'),choices=Array.from(panel.querySelectorAll('button'));
-  if(!ctx){start.disabled=true;status.textContent='Canvas unavailable';return;}
-  const BASE_INTERVAL=.25/.92,MAX_FAN=Math.PI/10,BULLET_RANGE=220;
-  const NAMES=['IRON ROOSTER','TWIN OWL','BROOD QUEEN','PRISM MANTA','TRIPLE HYDRA'];
-  const DRONE_TYPES=[
-    {type:'water',name:'WATER',interval:3,ratio:.60,color:'#55cbe3'},
-    {type:'fire',name:'FIRE',interval:2.3,ratio:1.25,color:'#e56e55'},
-    {type:'wind',name:'WIND',interval:5,ratio:.70,color:'#d6eef0'},
-    {type:'earth',name:'EARTH',interval:7,ratio:1,color:'#a87752'}
+
+  const canvas = document.getElementById('miner-game');
+  const ctx = canvas?.getContext('2d');
+  const start = document.getElementById('game-start');
+  const pause = document.getElementById('game-pause');
+  const scoreEl = document.getElementById('game-score');
+  const timeEl = document.getElementById('game-time');
+  const bestEl = document.getElementById('game-best');
+  const status = document.getElementById('game-status');
+  if (!canvas || !ctx || !start || !pause || !scoreEl || !timeEl || !bestEl || !status) return;
+
+  const W = 320, H = 240, ROUND_TIME = 45;
+  const keys = new Set();
+  const ores = [
+    {name:'STONE', points:1, color:'#879087', edge:'#5e675e', chance:.31},
+    {name:'COAL', points:2, color:'#4f5650', edge:'#282e29', chance:.23},
+    {name:'IRON', points:3, color:'#c49c83', edge:'#8d6f5c', chance:.18},
+    {name:'GOLD', points:5, color:'#e3bf52', edge:'#a8832e', chance:.13},
+    {name:'DIAMOND', points:8, color:'#67d6d0', edge:'#318f91', chance:.09},
+    {name:'EMERALD', points:10, color:'#62c77c', edge:'#2f8c4e', chance:.06}
   ];
-  const keys=new Set();
-  let mode='idle',x=160,hp=3,kills=0,shots=1,rateLevel=0,damageLevel=0;
-  let drones=[],bullets=[],chickens=[],hazards=[],beams=[],explosions=[],boss=null;
-  let nextUpgrade=25,nextBoss=101,bossIndex=0,choiceReason='',shotClock=0,spawnClock=1,last=0,raf=0,time=0,invuln=0,pointer=null,uid=0;
-  const clamp=(v,a=12,b=308)=>Math.max(a,Math.min(b,v));
-  const damageValue=()=>Math.pow(1.1,damageLevel);
-  const fireInterval=()=>BASE_INTERVAL/Math.pow(1.1,rateLevel);
-  const sync=()=>{hpEl.textContent=Number(hp.toFixed(2)).toString();killsEl.textContent=String(kills);if(droneEl)droneEl.textContent=drones.length+'/4';};
-  function difficulty(){
-    const early=Math.max(0,1-Math.min(1,(kills+time*.45)/50)*.08);
-    const stage=Math.floor((kills+time*.35)/25);
-    const hpScale=Math.min(5,1+stage*.07);
-    return {hp:hpScale,speed:(22+Math.min(55,time*.055+kills*.065))*early,interval:Math.max(.24,.92-time*.0015-kills*.002)*(1+(1-early))};
+
+  let mode = 'idle', playerX = 160, score = 0, timeLeft = ROUND_TIME, best = 0;
+  let items = [], particles = [], spawnClock = 0, last = 0, raf = 0, elapsed = 0;
+  let pointer = null, combo = 0, comboClock = 0, flash = 0;
+
+  try { best = Number(localStorage.getItem('taiying-pixel-miner-best')) || 0; } catch {}
+
+  const clamp = (v, a = 17, b = 303) => Math.max(a, Math.min(b, v));
+  const rect = (color, x, y, w, h) => {ctx.fillStyle = color;ctx.fillRect(Math.round(x), Math.round(y), w, h);};
+
+  function sync() {
+    scoreEl.textContent = String(score);
+    timeEl.textContent = String(Math.max(0, Math.ceil(timeLeft)));
+    bestEl.textContent = String(best);
   }
-  function chicken(kind,px,py,hpOverride){
-    const d=difficulty(),types={normal:[1,1,1,'#e8e4c8'],big:[1.7,1.55,.72,'#a9b8d0'],mother:[1.9,1.4,.8,'#c79bbe'],fast:[.5,.9,1.85,'#e47a6e'],child:[.75,.65,1.08,'#b8d58a']};
-    const [health,size,speed,color]=types[kind],base=hpOverride??d.hp*health;
-    return {id:++uid,kind,x:px,y:py,hp:base,maxHp:base,size,speed,color,slowUntil:0,dead:false};
+
+  function chooseOre() {
+    const roll = Math.random();
+    let total = 0;
+    for (const ore of ores) { total += ore.chance; if (roll <= total) return ore; }
+    return ores[0];
   }
-  function spawnChicken(){
-    const r=Math.random();let kind='normal';
-    if(kills>=50&&r<.12)kind='mother';
-    else if(kills>=25&&r<.29)kind='big';
-    else if(kills>=12&&r<.47)kind='fast';
-    chickens.push(chicken(kind,18+Math.random()*284,-18));
+
+  function spawn() {
+    const isTnt = elapsed > 5 && Math.random() < Math.min(.22, .10 + elapsed / 420);
+    const ore = isTnt ? {name:'TNT', points:0, color:'#d75d50', edge:'#8f342e'} : chooseOre();
+    const size = ore.name === 'TNT' ? 17 : 14 + Math.floor(Math.random() * 4);
+    items.push({x:18 + Math.random() * 284, y:-size, size, ore, speed:42 + elapsed * .72 + Math.random() * 18, spin:Math.random() * 4});
   }
-  function die(c,children){
-    if(c.dead)return;c.dead=true;kills++;
-    if(c.kind==='mother'){
-      const count=4+Math.floor(Math.random()*3),normalHp=difficulty().hp;
-      for(let i=0;i<count;i++)children.push(chicken('child',clamp(c.x+(i-(count-1)/2)*13,10,310),Math.min(177,c.y-10-Math.abs(i-(count-1)/2)*5),normalHp*.75));
+
+  function burst(item, color) {
+    for (let i = 0; i < 7; i++) particles.push({x:item.x,y:item.y,vx:(Math.random()-.5)*55,vy:-12-Math.random()*45,life:.45+Math.random()*.25,color});
+  }
+
+  function catchItem(item) {
+    if (item.ore.name === 'TNT') {
+      timeLeft = Math.max(0, timeLeft - 3);
+      combo = 0; comboClock = 0; flash = .22;
+      status.textContent = 'TNT! −3 秒 / seconds';
+      burst(item, '#d75d50');
+      return;
+    }
+    combo = comboClock > 0 ? Math.min(5, combo + 1) : 1;
+    comboClock = 2.2;
+    const gained = item.ore.points * combo;
+    score += gained;
+    status.textContent = item.ore.name + '  +' + gained + (combo > 1 ? '  COMBO ×' + combo : '');
+    burst(item, item.ore.color);
+  }
+
+  function finish() {
+    mode = 'over';
+    cancelAnimationFrame(raf);
+    pause.disabled = true;
+    keys.clear();
+    if (score > best) {
+      best = score;
+      try { localStorage.setItem('taiying-pixel-miner-best', String(best)); } catch {}
+      status.textContent = '新紀錄！/ New best: ' + best;
+    } else status.textContent = '時間到！/ Time up · ' + score + ' pts';
+    start.textContent = '再玩一次 / Replay';
+    sync(); draw();
+  }
+
+  function step(dt) {
+    if (mode !== 'playing') return;
+    elapsed += dt; timeLeft -= dt; comboClock = Math.max(0, comboClock - dt); flash = Math.max(0, flash - dt);
+    if (comboClock === 0) combo = 0;
+    const direction = (keys.has('ArrowRight') || keys.has('d') ? 1 : 0) - (keys.has('ArrowLeft') || keys.has('a') ? 1 : 0);
+    playerX = clamp(playerX + direction * 190 * dt);
+    spawnClock -= dt;
+    if (spawnClock <= 0) {
+      spawn();
+      spawnClock += Math.max(.30, .72 - elapsed * .006);
+    }
+    for (const item of items) {
+      item.y += item.speed * dt;
+      item.spin += dt * 2;
+      if (item.y + item.size / 2 >= 205 && item.y - item.size / 2 <= 225 && Math.abs(item.x - playerX) < 20 + item.size / 2) {
+        item.caught = true; catchItem(item);
+      }
+    }
+    items = items.filter(item => !item.caught && item.y < H + 22);
+    for (const p of particles) {p.x += p.vx*dt;p.y += p.vy*dt;p.vy += 85*dt;p.life -= dt;}
+    particles = particles.filter(p => p.life > 0);
+    sync();
+    if (timeLeft <= 0) finish();
+  }
+
+  function drawBlock(item) {
+    const s = item.size, x = item.x - s/2, y = item.y - s/2;
+    rect(item.ore.edge, x, y, s, s);
+    rect(item.ore.color, x+2, y+2, s-4, s-4);
+    if (item.ore.name === 'TNT') {
+      rect('#efe5cd', x+2, y+6, s-4, 5);
+      ctx.fillStyle='#7d2825';ctx.font='bold 5px monospace';ctx.textAlign='center';ctx.fillText('TNT',item.x,y+10);
+    } else {
+      rect('#edf0cf', x+4, y+4, 3, 3);
+      rect(item.ore.edge, x+s-6, y+s-6, 3, 3);
     }
   }
-  function damage(amount){
-    hp=Math.max(0,hp-amount);
-    if(hp===0){mode='over';keys.clear();cancelAnimationFrame(raf);pause.disabled=true;panel.hidden=true;start.textContent='再玩一次 / Replay';status.textContent='Game over · '+kills+' kills';}
-  }
-  function bossParts(){
-    if(!boss)return [];
-    const b=boss,alive=b.nodes.map((n,i)=>({...n,i,x:b.x+n.dx,y:b.y+n.dy})).filter(n=>n.hp>0);
-    if(!alive.length)return b.core>0?[{i:-1,x:b.x,y:b.y+8,hp:b.core,active:true}]:[];
-    let active=0;
-    if(b.type===1||b.type===4)active=Math.floor(b.age/(b.type===1?2:1.7))%alive.length;
-    if(b.type===3)active=Math.floor(b.age/1.3)%alive.length;
-    return alive.map((n,i)=>({...n,active:![1,3,4].includes(b.type)||i===active}));
-  }
-  function beginBoss(){
-    bossIndex++;nextBoss+=100;
-    const type=(bossIndex-1)%5,cycle=Math.floor((bossIndex-1)/5),scale=1+(bossIndex-1)*.2;
-    const layouts=[[[-31,5],[31,5]],[[-24,0],[24,0]],[[-30,12],[0,19],[30,12]],[[0,-15],[-31,7],[31,7],[0,26]],[[-34,-4],[0,-13],[34,-4]]];
-    boss={type,cycle,x:160,y:43,age:0,attack:1.6,phase:0,spawn:5,core:(16+type*4)*scale,coreMax:(16+type*4)*scale,nodes:layouts[type].map(([dx,dy])=>({dx,dy,hp:(8+type*2)*scale,maxHp:(8+type*2)*scale}))};
-    chickens=[];bullets=[];hazards=[];beams=[];explosions=[];invuln=1;status.textContent='BOSS '+bossIndex+' · '+NAMES[type];
-  }
-  function finishBoss(){
-    boss=null;bullets=[];hazards=[];beams=[];explosions=[];chickens=[];spawnClock=1.2;invuln=1;
-    if(drones.length<4){const reward=DRONE_TYPES[drones.length];drones.push({type:reward.type,clock:reward.interval});status.textContent='BOSS CLEAR · '+reward.name+' DRONE';}
-    else{hp+=1;status.textContent='BOSS CLEAR · +1 HP';}
-    sync();
-  }
-  function askUpgrade(reason){choiceReason=reason;mode='upgrade';keys.clear();cancelAnimationFrame(raf);pause.disabled=true;panel.hidden=false;status.textContent='選擇升級 / Choose one';choices[0].focus({preventScroll:true});}
-  function checkMilestones(){
-    if(mode!=='playing'||boss)return;
-    // Boss thresholds no longer open the upgrade panel: they start immediately.
-    if(kills>=nextBoss){beginBoss();return;}
-    if(kills>=nextUpgrade)askUpgrade('regular');
-  }
-  function choose(kind){
-    if(mode!=='upgrade')return;
-    if(kind==='shot')shots++;else if(kind==='rate')rateLevel++;else if(kind==='damage')damageLevel++;else return;
-    choiceReason='';panel.hidden=true;pause.disabled=false;nextUpgrade+=25;
-    mode='paused';resume();
-  }
-  choices.forEach(b=>b.addEventListener('click',()=>choose(b.dataset.upgrade)));
-  function enemyTarget(){
-    if(boss){const p=bossParts().filter(p=>p.active);if(p.length)return {boss:true,part:p.reduce((a,b)=>Math.abs(b.x-x)<Math.abs(a.x-x)?b:a,p[0])};}
-    const c=chickens.filter(c=>!c.dead).reduce((a,b)=>!a||b.y>a.y?b:a,null);return c?{boss:false,chicken:c}:null;
-  }
-  function dronePosition(i){const slots=[[-30,204],[30,204],[-54,215],[54,215]],p=slots[i]||[0,205];return {x:clamp(x+p[0]),y:p[1]};}
-  function droneShot(i,d){
-    const target=enemyTarget();if(!target){d.clock=.25;return;}
-    const p=dronePosition(i),tx=target.boss?target.part.x:target.chicken.x,ty=target.boss?target.part.y:target.chicken.y,angle=Math.atan2(tx-p.x,ty-p.y),spec=DRONE_TYPES.find(t=>t.type===d.type);
-    bullets.push({source:'drone',droneType:d.type,x:p.x,y:p.y,vx:Math.sin(angle)*150,vy:Math.cos(angle)*150,distance:0,damage:damageValue()*spec.ratio,hit:false});d.clock=spec.interval;
-  }
-  function updateDrones(dt){drones.forEach((d,i)=>{d.clock-=dt;if(d.clock<=0)droneShot(i,d);});}
-  function addExplosion(xp,yp,damageAmount,children){
-    explosions.push({x:xp,y:yp,life:.35,max:.35});
-    chickens.forEach(c=>{if(!c.dead&&Math.hypot(c.x-xp,c.y-yp)<38){c.y=Math.max(-18,c.y-13);hitChicken(c,damageAmount*.1,children);}});
-  }
-  function hitChicken(c,amount,children){if(c.dead)return;c.hp-=amount;if(c.hp<=0)die(c,children);}
-  function earthSpikes(c,amount){for(let i=-1;i<=1;i++)bullets.push({source:'earth-spike',droneType:'earth',x:c.x+i*8,y:c.y+12,vx:i*32,vy:105,distance:0,damage:amount*.5,ignoreId:c.id,hit:false});}
-  function pellet(px,py,angle,speed=70){if(hazards.length<260)hazards.push({x:px,y:py,vx:Math.sin(angle)*speed,vy:Math.cos(angle)*speed});}
-  function fan(px,py,count,span,center=0,speed=70){for(let i=0;i<count;i++)pellet(px,py,center+(count===1?0:(i/(count-1)-.5)*span),speed);}
-  function ring(px,py,count,phase,speed=57){for(let i=0;i<count;i++)pellet(px,py,phase+i*Math.PI*2/count,speed);}
-  function beam(px,width=22,delay=.8,duration=.45){beams.push({x:px,width,delay,life:duration});}
-  function bossAttack(){
-    const b=boss,spd=65+Math.min(35,bossIndex*3),aim=Math.atan2(x-b.x,218-b.y),extra=Math.min(6,b.cycle*2);
-    if(b.type===0){if(b.phase%2===0)fan(b.x,b.y+20,8+extra,1.7,aim*.45,spd);else{fan(b.x-30,b.y+15,4,.5,aim,spd+9);fan(b.x+30,b.y+15,4,.5,aim,spd+9);}}
-    else if(b.type===1){ring(b.x-24,b.y,11+extra,b.phase*.27,spd*.72);ring(b.x+24,b.y,11+extra,-b.phase*.27,spd*.72);if(b.phase%2)fan(b.x,b.y+15,4,.35,aim,spd+15);}
-    else if(b.type===2){ring(b.x,b.y+17,14+extra,b.phase*.31,spd*.75);if(b.phase%2===0)fan(b.x,b.y+20,6,1.1,aim,spd);}
-    else if(b.type===3){if(b.phase%2===0){beam(clamp(x,28,292),25,.75,.55);beam(clamp(320-x,28,292),21,.75,.55);}else{for(let i=0;i<7;i++)beam(24+i*45,14,1+i*.10,.3);fan(b.x,b.y+20,6,1.5,0,spd);}}
-    else{const gap=32+(b.phase*61)%256;for(let px=10;px<320;px+=16)if(Math.abs(px-gap)>28)pellet(px,b.y+22,0,spd*.9);if(b.phase%2===1){fan(b.x-34,b.y+12,4,.3,aim,spd+12);fan(b.x+34,b.y+12,4,.3,aim,spd+12);}}
-    b.phase++;b.attack=Math.max(.66,1.55-b.type*.10-b.cycle*.10);
-  }
-  function updateBoss(dt){
-    boss.age+=dt;boss.x=160+Math.sin(boss.age*(boss.type===3?1.1:.65))*[62,80,45,90,55][boss.type];boss.attack-=dt;if(boss.attack<=0)bossAttack();
-    if(boss.type===2){boss.spawn-=dt;if(boss.spawn<=0){if(chickens.length<6)for(let i=0;i<3;i++)chickens.push(chicken('child',boss.x+(i-1)*24,boss.y+25));boss.spawn=6;}}
-  }
-  function hitBossProjectile(b,p){const part=bossParts().find(q=>Math.abs(q.x-p.x)<10&&Math.abs(q.y-p.y)<11);if(!part)return false;p.hit=true;if(!part.active)return true;if(part.i===-1)b.core=Math.max(0,b.core-p.damage);else b.nodes[part.i].hp=Math.max(0,b.nodes[part.i].hp-p.damage);return true;}
-  function step(dt){
-    if(mode!=='playing')return;time+=dt;invuln=Math.max(0,invuln-dt);x=clamp(x+((keys.has('ArrowRight')||keys.has('d')?1:0)-(keys.has('ArrowLeft')||keys.has('a')?1:0))*185*dt);shotClock-=dt;
-    while(shotClock<=0){const half=Math.min(MAX_FAN,(shots-1)*Math.PI/36);for(let i=0;i<shots;i++){const angle=shots===1?0:-half+i*2*half/(shots-1);bullets.push({source:'main',x,y:207,vx:Math.sin(angle)*235,vy:-Math.cos(angle)*235,distance:0,damage:damageValue(),hit:false});}shotClock+=fireInterval();}
-    updateDrones(dt);if(boss)updateBoss(dt);else{spawnClock-=dt;if(spawnClock<=0){if(chickens.length<45)spawnChicken();spawnClock+=difficulty().interval;}}
-    const d=difficulty();chickens.forEach(c=>{const slow=c.slowUntil>time?.55:1;c.y+=d.speed*c.speed*slow*dt;});const children=[];
-    bullets.forEach(b=>{
-      b.x+=b.vx*dt;b.y+=b.vy*dt;b.distance+=Math.hypot(b.vx,b.vy)*dt;
-      if(b.source==='earth-spike'){const c=chickens.find(c=>!c.dead&&c.id!==b.ignoreId&&Math.abs(c.x-b.x)<10*c.size&&Math.abs(c.y-b.y)<11*c.size);if(c){hitChicken(c,b.damage,children);b.hit=true;}return;}
-      const c=chickens.find(c=>!c.dead&&Math.abs(c.x-b.x)<10*c.size&&b.y<c.y+11*c.size&&b.y+4>c.y-6*c.size);
-      if(c){const type=b.droneType;if(type==='water')c.slowUntil=Math.max(c.slowUntil,time+2.5);if(type==='wind'){hitChicken(c,b.damage,children);c.y=Math.max(-18,c.y-15);addExplosion(c.x,c.y,b.damage,children);}else if(type==='earth'){hitChicken(c,b.damage,children);earthSpikes(c,b.damage);}else hitChicken(c,b.damage,children);b.hit=true;return;}
-      if(boss&&hitBossProjectile(boss,b))return;
-    });
-    chickens.push(...children);if(boss&&boss.core<=0)finishBoss();
-    for(const c of chickens)if(!c.dead&&c.y>=224){c.dead=true;damage(1);if(mode==='over')break;}
-    hazards.forEach(h=>{h.x+=h.vx*dt;h.y+=h.vy*dt;if(Math.abs(h.x-x)<8&&Math.abs(h.y-218)<8){h.hit=true;if(invuln===0&&mode==='playing'){damage(.75);invuln=.9;}}});
-    beams.forEach(b=>{if(b.delay>0)b.delay-=dt;else{b.life-=dt;if(Math.abs(b.x-x)<b.width/2+5&&invuln===0&&mode==='playing'){damage(.75);invuln=.9;}}});
-    explosions.forEach(e=>e.life-=dt);chickens=chickens.filter(c=>!c.dead);bullets=bullets.filter(b=>!b.hit&&b.distance<BULLET_RANGE&&b.y>-20&&b.y<250&&b.x>-20&&b.x<340);hazards=hazards.filter(h=>!h.hit&&h.y<252&&h.y>-45&&h.x>-25&&h.x<345);beams=beams.filter(b=>b.life>0);explosions=explosions.filter(e=>e.life>0);sync();checkMilestones();
-  }
-  function rect(color,px,py,w,h){ctx.fillStyle=color;ctx.fillRect(Math.round(px),Math.round(py),w,h);}
-  function drawChicken(c){ctx.save();ctx.translate(Math.round(c.x),Math.round(c.y));ctx.scale(c.size,c.size);rect(c.color,-6,0,12,8);rect(c.color,2,-4,6,5);rect(c.color,-9,1,4,4);rect('#c77861',3,-6,3,2);rect('#cba35b',8,-1,3,2);rect('#cba35b',-3,8,2,3);rect('#cba35b',3,8,2,3);rect('#172018',5,-2,1,1);if(c.kind==='mother')rect('#f1d4e8',-3,1,5,5);if(c.kind==='fast'){rect('#ebaaa1',-12,1,3,1);rect('#ebaaa1',-15,4,5,1);}if(c.slowUntil>time){ctx.globalAlpha=.38;rect('#55cbe3',-11,-6,24,19);}ctx.restore();const width=14*c.size;rect('#394733',c.x-width/2,c.y-10*c.size,width,2);rect(c.color,c.x-width/2,c.y-10*c.size,width*Math.max(0,c.hp/c.maxHp),2);}
-  function drawDrone(i,d){const p=dronePosition(i),spec=DRONE_TYPES.find(t=>t.type===d.type);rect(spec.color,p.x-4,p.y-4,8,8);rect('#172018',p.x-1,p.y-1,2,2);}
-  function drawBoss(){const b=boss,bx=Math.round(b.x),by=b.y;if(b.type===0){rect('#788179',bx-22,by-15,44,37);rect('#525e62',bx-44,by-4,23,24);rect('#525e62',bx+21,by-4,23,24);rect('#c68e62',bx-12,by-25,24,11);rect('#d77568',bx-6,by-30,12,5);rect('#e2bc63',bx-4,by,8,6);}else if(b.type===1){rect('#7e78a8',bx-39,by-18,78,37);rect('#aaa3ca',bx-34,by-25,15,10);rect('#aaa3ca',bx+19,by-25,15,10);rect('#565677',bx-14,by-16,28,37);rect('#e2bc63',bx-4,by+8,8,7);}else if(b.type===2){rect('#b67f9f',bx-28,by-23,56,42);rect('#e0b4c9',bx-19,by-27,38,20);rect('#e5c177',bx-14,by-30,5,7);rect('#e5c177',bx-3,by-33,6,10);rect('#e5c177',bx+9,by-30,5,7);for(let i=-1;i<=1;i++)rect('#dfceb0',bx+i*30-10,by+4,20,23);}else if(b.type===3){rect('#517f9e',bx-17,by-20,34,46);rect('#73bac4',bx-36,by-7,72,23);rect('#517f9e',bx-49,by+2,98,9);rect('#92d2cb',bx-6,by-26,12,59);}else{rect('#857e55',bx-39,by+12,78,17);for(let i=-1;i<=1;i++){const hy=by+(i===0?-13:-4);rect('#baa66d',bx+i*34-12,hy-12,24,27);rect('#d79962',bx+i*34-8,hy-17,16,5);rect('#dfe1b5',bx+i*34-7,hy-7,4,4);rect('#dfe1b5',bx+i*34+3,hy-7,4,4);}}bossParts().forEach(p=>{ctx.strokeStyle=p.active?'#c6ec91':'#4c5146';ctx.lineWidth=1;ctx.strokeRect(Math.round(p.x)-9,p.y-9,18,18);rect(p.active?'#b4d88a':'#555f50',p.x-5,p.y-5,10,10);rect('#111910',p.x-2,p.y-2,4,4);});const total=b.nodes.reduce((s,n)=>s+n.maxHp,0)+b.coreMax,remaining=b.nodes.reduce((s,n)=>s+n.hp,0)+b.core;rect('#394332',72,6,176,3);rect('#d8bd76',72,6,176*remaining/total,3);}
-  function draw(){rect('#101710',0,0,320,240);for(let i=0;i<22;i++)rect('#293d28',(i*73)%316,(i*41)%234,1,1);rect('#48603b',0,230,320,1);beams.forEach(b=>{if(b.delay>0){ctx.strokeStyle='#be906a';ctx.setLineDash([3,5]);ctx.strokeRect(b.x-b.width/2,75,b.width,156);ctx.setLineDash([]);}else rect('#c58372',b.x-b.width/2,75,b.width,156);});if(invuln===0||Math.floor(time*9)%2===0)[[0,-6],[-6,0],[0,0],[6,0]].forEach(([dx,dy])=>rect('#b4d88a',x+dx-3,218+dy,6,6));drones.forEach(drawDrone);bullets.forEach(b=>{const color=b.source==='main'?'#e9eab5':DRONE_TYPES.find(d=>d.type===b.droneType)?.color||'#b98b65';rect(color,b.x-1,b.y,3,5);});chickens.forEach(drawChicken);if(boss)drawBoss();hazards.forEach(h=>rect('#dfa581',h.x-2,h.y-2,4,4));explosions.forEach(e=>{ctx.globalAlpha=e.life/e.max;ctx.strokeStyle='#d6eef0';ctx.strokeRect(e.x-15,e.y-15,30,30);ctx.globalAlpha=1;});if(mode!=='playing'&&mode!=='upgrade'){rect('#101710dd',0,85,320,54);ctx.fillStyle='#b4d88a';ctx.textAlign='center';ctx.font='12px monospace';ctx.fillText(mode==='idle'?'4 PIXELS vs CHICKENS':mode==='paused'?'PAUSED':kills+' KILLS',160,116);}}
-  function loop(t){if(mode!=='playing')return;const dt=Math.min(Math.max((t-last)/1000,0),.035);last=t;step(dt);draw();if(mode==='playing')raf=requestAnimationFrame(loop);}
-  function stop(){if(mode!=='playing')return;mode='paused';cancelAnimationFrame(raf);keys.clear();pause.textContent='繼續 / Resume';status.textContent='已暫停 / Paused';draw();}
-  function resume(){cancelAnimationFrame(raf);mode='playing';last=performance.now();pause.textContent='暫停 / Pause';status.textContent=boss?'BOSS '+bossIndex+' · '+NAMES[boss.type]:'遊戲中 / Playing';canvas.focus({preventScroll:true});raf=requestAnimationFrame(loop);}
-  function reset(){cancelAnimationFrame(raf);x=160;hp=3;kills=0;shots=1;rateLevel=0;damageLevel=0;drones=[];bullets=[];chickens=[];hazards=[];beams=[];explosions=[];boss=null;nextUpgrade=25;nextBoss=101;bossIndex=0;choiceReason='';shotClock=0;spawnClock=1;time=0;invuln=0;uid=0;keys.clear();panel.hidden=true;pause.disabled=false;start.textContent='重新開始 / Restart';sync();resume();}
-  start.addEventListener('click',reset);pause.addEventListener('click',()=>{if(mode==='playing')stop();else if(mode==='paused')resume();});canvas.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','a','d'].includes(e.key)&&mode==='playing'){e.preventDefault();keys.add(e.key);}if((e.key===' '||e.key==='Escape')&&mode==='playing'){e.preventDefault();stop();}});window.addEventListener('keyup',e=>keys.delete(e.key));canvas.addEventListener('blur',()=>keys.clear());
-  const aim=e=>{const r=canvas.getBoundingClientRect();x=clamp((e.clientX-r.left)*320/r.width);};canvas.addEventListener('pointerdown',e=>{if(mode!=='playing')return;pointer=e.pointerId;canvas.setPointerCapture(pointer);aim(e);canvas.focus({preventScroll:true});});canvas.addEventListener('pointermove',e=>{if(pointer===e.pointerId&&mode==='playing')aim(e);});const release=e=>{if(pointer===e.pointerId){if(canvas.hasPointerCapture(pointer))canvas.releasePointerCapture(pointer);pointer=null;}};canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('blur',stop);if('IntersectionObserver'in window)new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)stop();}).observe(canvas);sync();draw();
-})();
 
+  function drawPlayer() {
+    const x = Math.round(playerX);
+    rect('#2b3429', x-18, 211, 36, 5);
+    rect('#6f7d68', x-15, 205, 30, 9);
+    rect('#9aa394', x-11, 208, 22, 5);
+    rect('#202720', x-13, 216, 7, 7); rect('#202720', x+6, 216, 7, 7);
+    rect('#b4d88a', x-4, 198, 8, 8);
+    rect('#d9c38f', x-3, 193, 6, 6);
+  }
+
+  function draw() {
+    rect(flash > 0 ? '#2a1714' : '#101710', 0, 0, W, H);
+    for (let i=0;i<30;i++) rect(i%4===0?'#31442d':'#243424',(i*67)%318,(i*37)%195,2,2);
+    rect('#263522',0,229,W,11);rect('#526143',0,229,W,2);
+    items.forEach(drawBlock);
+    particles.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/.7);rect(p.color,p.x,p.y,3,3);ctx.globalAlpha=1;});
+    drawPlayer();
+    if (combo > 1 && comboClock > 0) {ctx.fillStyle='#d8e8b9';ctx.font='bold 9px monospace';ctx.textAlign='left';ctx.fillText('COMBO ×'+combo,8,15);}
+    if (mode !== 'playing') {
+      rect('#101710dd',0,82,W,70);
+      ctx.fillStyle='#b4d88a';ctx.textAlign='center';ctx.font='bold 13px monospace';
+      ctx.fillText(mode==='idle'?'PIXEL MINER':mode==='paused'?'PAUSED':'TIME UP',160,111);
+      ctx.fillStyle='#a8b09f';ctx.font='9px monospace';ctx.fillText(mode==='idle'?'CATCH ORES · AVOID TNT':score+' POINTS',160,130);
+    }
+  }
+
+  function loop(now) {
+    if (mode !== 'playing') return;
+    const dt = Math.min(Math.max((now-last)/1000,0),.035);last=now;step(dt);draw();
+    if (mode === 'playing') raf=requestAnimationFrame(loop);
+  }
+
+  function resume() {
+    if (mode !== 'paused') return;
+    mode='playing';last=performance.now();pause.textContent='暫停 / Pause';status.textContent='挖礦中 / Mining';canvas.focus({preventScroll:true});raf=requestAnimationFrame(loop);
+  }
+
+  function stop() {
+    if (mode !== 'playing') return;
+    mode='paused';cancelAnimationFrame(raf);keys.clear();pause.textContent='繼續 / Resume';status.textContent='已暫停 / Paused';draw();
+  }
+
+  function reset() {
+    cancelAnimationFrame(raf);playerX=160;score=0;timeLeft=ROUND_TIME;items=[];particles=[];spawnClock=.45;elapsed=0;combo=0;comboClock=0;flash=0;keys.clear();
+    mode='paused';pause.disabled=false;start.textContent='重新開始 / Restart';sync();resume();
+  }
+
+  start.addEventListener('click',reset);
+  pause.addEventListener('click',()=>{if(mode==='playing')stop();else if(mode==='paused')resume();});
+  canvas.addEventListener('keydown',e=>{
+    if (['ArrowLeft','ArrowRight','a','d'].includes(e.key) && mode==='playing') {e.preventDefault();keys.add(e.key);}
+    if ((e.key===' ' || e.key==='Escape') && mode==='playing') {e.preventDefault();stop();}
+  });
+  window.addEventListener('keyup',e=>keys.delete(e.key));
+  canvas.addEventListener('blur',()=>keys.clear());
+  const aim=e=>{const r=canvas.getBoundingClientRect();playerX=clamp((e.clientX-r.left)*W/r.width);};
+  canvas.addEventListener('pointerdown',e=>{if(mode!=='playing')return;pointer=e.pointerId;canvas.setPointerCapture(pointer);aim(e);canvas.focus({preventScroll:true});});
+  canvas.addEventListener('pointermove',e=>{if(pointer===e.pointerId&&mode==='playing')aim(e);});
+  const release=e=>{if(pointer===e.pointerId){if(canvas.hasPointerCapture(pointer))canvas.releasePointerCapture(pointer);pointer=null;}};
+  canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
+  window.addEventListener('blur',stop);
+  if ('IntersectionObserver' in window) new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)stop();}).observe(canvas);
+  sync();draw();
+})();
 </script>
 </body></html>
 
