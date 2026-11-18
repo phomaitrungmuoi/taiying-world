@@ -5,7 +5,7 @@
 <meta name="description" content="黃泰英 Huang Tai Ying — 元智大學資訊工程學系學生。貓咪、美食與日常。">
 <meta name="theme-color" content="#141a16"><title>黃泰英 · Tai Ying's World</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23141a16' d='M0 0h32v32H0z'/%3E%3Cpath fill='%239ccc75' d='M6 6h20v6h-7v14h-6V12H6z'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css"><script src="script.js" defer></script>
+<link rel="stylesheet" href="style.css"><script src="script.js" defer></script><script src="effects.js" defer></script><script src="minesweeper.js" defer></script>
 <style>
 .games-line{margin:28px 0 0;border-top:1px solid var(--line);padding-top:20px}
 .games-line h3{font-size:14px;font-weight:500;margin:0 0 12px;color:var(--muted)}
@@ -28,14 +28,7 @@
 .profile{position:relative}.peek-cat{position:absolute;right:24px;top:-37px;width:58px;height:44px;z-index:2;image-rendering:pixelated;animation:cat-peek 7s steps(2,end) infinite;transform-origin:bottom}
 .profile:hover .peek-cat{animation-play-state:paused}.student-id{display:block;font:12px/1.8 var(--mono);color:var(--green);margin-top:8px}
 @keyframes cat-peek{0%,65%,100%{transform:translateY(5px)}70%,90%{transform:translateY(-3px)}}
-.arcade{margin:0 40px 64px;padding:32px;border:1px solid var(--line);background:#192219}
-.arcade-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}.arcade h2{font-size:26px}.arcade h2 span{font-size:13px;margin-top:8px}.arcade-score{font:13px var(--mono);color:var(--green);white-space:nowrap}
-.game-wrap{max-width:480px;margin:auto}#miner-game{display:block;width:100%;height:auto;aspect-ratio:4/3;background:#101710;border:2px solid #526441;image-rendering:pixelated;touch-action:none}
-.game-actions{display:flex;gap:12px;align-items:center;justify-content:center;margin:16px 0}
-.game-actions button{font:14px/1.5 var(--mono);background:#b4d88a;color:#152010;border:1px solid #b4d88a;box-shadow:3px 3px 0 #080d09;padding:10px 16px;min-height:44px}
-.game-actions button:disabled{opacity:.4;cursor:default}.game-actions button.secondary{background:transparent;color:var(--green)}
-.game-hint,#game-status{text-align:center;font-size:13px;line-height:1.7;color:var(--muted);margin:8px 0}#game-status{min-height:23px;color:var(--green)}
-@media(max-width:580px){.arcade{margin:0 16px 40px;padding:22px 16px}.arcade-top{align-items:flex-start}.arcade h2{font-size:22px}.arcade-score{font-size:11px;line-height:1.8}.peek-cat{right:18px}}
+@media(max-width:580px){.peek-cat{right:18px}}
 
 button.peek-cat{padding:0;border:0;background:transparent;cursor:pointer;width:82px;height:66px;top:-56px;right:20px;color:inherit}
 .peek-cat svg{width:100%;height:100%;display:block;overflow:visible}.cat-tail{transform-origin:27px 23px;animation:tail-sway 2.4s steps(3,end) infinite}
@@ -44,17 +37,18 @@ button.peek-cat{padding:0;border:0;background:transparent;cursor:pointer;width:8
 .cat-bubble{position:absolute;right:4px;top:-86px;max-width:180px;padding:3px 9px;background:#b4d88a;color:#172018;font:12px/1.7 var(--mono);border:2px solid #111911;opacity:0;pointer-events:none;transition:opacity .15s}.cat-bubble.show{opacity:1}
 @keyframes tail-sway{50%{transform:rotate(10deg)}}@keyframes cat-blink{0%,92%,96%,100%{transform:scaleY(1)}93%,95%{transform:scaleY(.15)}}
 @keyframes cat-hop{50%{transform:translateY(-7px) rotate(-4deg)}}@keyframes cat-heart{10%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
-.arcade-score{line-height:1.8}.game-stage{position:relative}
 @media(prefers-reduced-motion:reduce){.cat-eyes,.cat-tail,.peek-cat.petted,.cat-heart{animation:none!important}.peek-cat.petted .cat-heart{opacity:1}}
 
 </style>
+<link rel="stylesheet" href="minecraft.css">
 </head>
 <body>
+<div id="xp" aria-hidden="true"><i></i></div>
 <a class="skip" href="#main">跳至內容 / Skip to content</a><div id="particles" aria-hidden="true"></div>
-<header><a class="brand" href="#home"><span class="mark">T<span>Y</span></span> TAI YING<span class="brand-world"> / WORLD</span></a><nav aria-label="主要導覽"><a href="#about">關於我 <small>About</small></a><a href="#contact">聯絡 <small>Contact</small></a></nav><button class="motion" id="motion" aria-pressed="false" aria-label="暫停動畫">Ⅱ</button></header>
+<header><a class="brand" href="#home"><span class="mark">T<span>Y</span></span> TAI YING<span class="brand-world"> / WORLD</span></a><nav aria-label="主要導覽"><a href="#about">關於我 <small>About</small></a><a href="#achievements">成就 <small>Advancements</small></a><a href="#contact">聯絡 <small>Contact</small></a><a href="#arcade">遊戲 <small>Play</small></a></nav><button class="motion" id="motion" aria-pressed="false" aria-label="暫停動畫">Ⅱ</button></header>
 <main id="main">
 <section class="hero" id="home">
-<div class="hero-copy"><p class="eyebrow">HELLO, WORLD. <span>你好，世界。</span></p><h1>黃泰英<span>Huang Tai Ying<span class="cursor">_</span></span></h1><p class="role">元智大學 資訊工程學系<br><span>Computer Science · Yuan Ze University</span></p><p class="intro">i'm a ghoti</p><div class="actions"><a class="button primary" href="#about">認識我 <span>Explore ↓</span></a><a class="button" href="https://github.com/phomaitrungmuoi" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div>
+<div class="hero-copy"><p class="eyebrow">HELLO, WORLD. <span>你好，世界。</span></p><h1>黃泰英<span>Huang Tai Ying<span class="cursor">_</span></span></h1><p class="role">元智大學 資訊工程學系<br><span>Computer Science · Yuan Ze University</span></p><p class="intro">i'm a ghoti<span class="splash" id="splash" aria-hidden="true">NCPC finals!</span></p><div class="actions"><a class="button primary" href="#about">認識我 <span>Explore ↓</span></a><a class="button" href="https://github.com/phomaitrungmuoi" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a class="button" href="https://codeforces.com/profile/asdfvsdfas" target="_blank" rel="noopener noreferrer">Codeforces ↗</a></div></div>
 <aside class="profile"><button class="peek-cat" id="profile-cat" type="button" aria-label="摸摸貓咪 / Pet the cat"><svg viewBox="0 0 34 28" aria-hidden="true" focusable="false" shape-rendering="crispEdges">
 <path class="cat-tail" fill="#bca06b" d="M24 22h5v-3h2v-6h-3v-3h-3v3h2v3h1v3h-4z"/>
 <path fill="#101710" d="M5 2h3v2h3v3h8V4h3V2h3v19h-3v6H5v-6H3V7h2z"/>
@@ -69,24 +63,29 @@ button.peek-cat{padding:0;border:0;background:transparent;cursor:pointer;width:8
 </svg></button><span id="cat-bubble" class="cat-bubble" role="status" aria-live="polite"></span><div class="profile-top"><span>PLAYER PROFILE</span><span>01</span></div><div class="avatar-wrap"><span class="avatar-fallback" aria-hidden="true">TY</span><img id="avatar" src="https://github.com/phomaitrungmuoi.png?size=460" alt="黃泰英的 GitHub 頭像" width="300" height="300"></div><div class="profile-name">phomaitrungmuoi<span>STUDENT / EXPLORER</span><small class="student-id">學號 / ID 1141546</small></div><div class="profile-bottom"><span>YZU · 資工一年級</span><span class="tiny-blocks" aria-hidden="true">▪ ▪ ▪</span></div></aside>
 <div class="hero-bottom"><span>01 — A LITTLE WORLD OF MINE</span><a href="#about">SCROLL TO EXPLORE ↓</a></div>
 </section>
-<section class="section reveal" id="about"><div class="section-title"><p class="eyebrow">01 / ABOUT ME</p><h2>關於我<span>A little about me.</span></h2></div><div class="about-body"><p>2007 年出生，元智大學資工系一年級。喜歡貓咪、美食，還有認識新朋友、一起出去玩。</p><p class="english" lang="en">Born in 2007. First-year student at YZU. Cats, good food, new friends, and days out.</p><p class="cpe">CPE：曾解出 3 題。</p><div class="games-line"><h3>喜歡玩的遊戲 / Games &amp; platforms</h3><ul class="game-tags"><li>Yu-Gi-Oh! Master Duel</li><li>Brawl Stars</li><li>Steam</li></ul></div></div></section>
+<section class="section reveal" id="about"><div class="section-title"><p class="eyebrow">01 / ABOUT ME</p><h2>關於我<span>A little about me.</span></h2></div><div class="about-body"><p>2007 年出生，元智大學資工系一年級。喜歡貓咪、美食，還有認識新朋友、一起出去玩。</p><p class="english" lang="en">Born in 2007. First-year student at YZU. Cats, good food, new friends, and days out.</p><div class="games-line"><h3>喜歡玩的遊戲 / Games &amp; platforms</h3><ul class="game-tags"><li>Yu-Gi-Oh! Master Duel</li><li>Brawl Stars</li><li>Steam</li></ul></div></div></section>
+<section class="section reveal" id="achievements"><div class="section-title"><p class="eyebrow">02 / ADVANCEMENTS</p><h2>成就<span>Advancements made.</span></h2></div><div class="advancement-list">
+<article class="advancement"><span class="adv-icon" aria-hidden="true"><svg viewBox="0 0 32 32" focusable="false" shape-rendering="crispEdges"><path fill="#e3bf52" d="M8 4h16v14h-2v2H10v-2H8zM4 8h4v6H4zM24 8h4v6h-4zM14 20h4v4h-4zM10 24h12v3H10zM8 27h16v3H8z"/><path fill="#f4dc8a" d="M10 6h2v10h-2z"/><path fill="#a8832e" d="M21 6h3v12h-3zM8 27h16v3H8z"/></svg></span><div><p class="adv-label">Advancement Made!</p><h3>NCPC 決賽<small>NCPC Finals</small></h3><p>參加 NCPC 決賽。<br><span lang="en">Took part in the NCPC finals.</span></p></div></article>
+<article class="advancement"><span class="adv-icon" aria-hidden="true"><svg viewBox="0 0 32 32" focusable="false" shape-rendering="crispEdges"><path fill="#b4d88a" d="M12 9h3v3h-3zM9 12h3v3H9zM6 15h3v3H6zM9 18h3v3H9zM12 21h3v3h-3zM20 9h3v3h-3zM23 12h3v3h-3zM26 15h3v3h-3zM23 18h3v3h-3zM20 21h3v3h-3z"/><path fill="#e3bf52" d="M18 8h3v3h-3zM17 11h3v3h-3zM16 14h3v3h-3zM15 17h3v3h-3zM14 20h3v3h-3z"/></svg></span><div><p class="adv-label">Advancement Made!</p><h3>CPE<small>Programming exam</small></h3><p>曾解出 3 題。<br><span lang="en">Solved 3 problems.</span></p></div></article>
+</div></section>
 <section class="contact reveal" id="contact" aria-labelledby="contact-title">
-<p class="eyebrow">02 / LET'S CONNECT</p>
+<p class="eyebrow">03 / LET'S CONNECT</p>
 <div class="contact-heading"><h2 id="contact-title">認識一下？<span>Find me here.</span></h2><p>聊聊日常，或一起玩遊戲。</p></div>
 <div class="contact-carousel" role="region" aria-roledescription="carousel" aria-label="社群與聯絡方式">
 <div class="social-track" id="social-track" tabindex="0" aria-label="聯絡卡片，可左右滑動" aria-describedby="swipe-hint">
-<article class="social-card" role="group" aria-label="1 / 6 — Instagram"><span class="slot-number">01</span><span class="pixel-app ig"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#d35895" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#ef9b65" d="M0 24h32v4h-4v4H4v-4H0z"/><path fill="#fff4dc" d="M9 6h14v2h3v16h-3v2H9v-2H6V9h3zm1 3v2H9v11h2v1h11v-2h1V11h-2V9z"/><path fill="#fff4dc" d="M14 11h5v2h2v7h-2v2h-6v-2h-2v-6h3zm0 4v4h4v-4zm7-5h3v3h-3z"/></svg></span><h3>Instagram</h3><p>@_hta_1312</p><a class="slot-action" href="https://www.instagram.com/_hta_1312/" target="_blank" rel="noopener noreferrer">看看日常 ↗</a></article>
-<article class="social-card" role="group" aria-label="2 / 6 — Facebook"><span class="slot-number">02</span><span class="pixel-app fb"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#477ee0" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#f4f6ff" d="M17 6h8v5h-6v5h6v5h-6v11h-6V21H9v-5h4V10h2V8h2z"/></svg></span><h3>Facebook</h3><p>Huang Tai Ying</p><a class="slot-action" href="https://www.facebook.com/share/1HAtWhSL4w/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">打個招呼 ↗</a></article>
-<article class="social-card" role="group" aria-label="3 / 6 — Discord"><span class="slot-number">03</span><span class="pixel-app discord"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#5865f2" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#f1efff" d="M8 8h5v2h6V8h5v3h2v4h2v9h-5v-2H9v2H4v-9h2v-4h2z"/><path fill="#5865f2" d="M9 14h4v5H9zm10 0h4v5h-4zM12 23h8v2h-8z"/></svg></span><h3>Discord</h3><p>一起聊天、玩遊戲。</p><a class="slot-action" href="https://discord.gg/tUbKAQcD" target="_blank" rel="noopener noreferrer">加入 Discord ↗</a></article>
-<article class="social-card" role="group" aria-label="4 / 6 — Steam"><span class="slot-number">04</span><span class="pixel-app steam"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#284d6b" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#e6eff4" d="M20 5h7v2h2v8h-2v2h-6v-2h-3V8h2zm2 3v2h-1v3h2v1h2v-2h1V9h-1V8zM0 18h5v2h5v2h4v-4h3v-3h4v5h-3v4h-2v4H9v-2H5v-3H0z"/><path fill="#284d6b" d="M10 23h4v3h-4z"/></svg></span><h3>Steam</h3><p><span class="friend-caption">FRIEND CODE</span><span class="friend-code">1341861520</span></p><button class="slot-action" type="button" id="copy-steam">複製好友代碼 / Copy</button></article>
-<article class="social-card" role="group" aria-label="5 / 6 — Email"><span class="slot-number">05</span><span class="pixel-app mail"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#8ba668" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#faf2d5" d="M5 8h22v17H5zm3 3v2h3v2h3v2h4v-2h3v-2h3v-2zm0 6v5h16v-5h-3v2h-3v2h-4v-2h-3v-2z"/></svg></span><h3>Email</h3><p><a href="mailto:phomaitrungmuoi@gmail.com">phomaitrungmuoi@gmail.com</a></p><button class="slot-action copy" data-copy="phomaitrungmuoi@gmail.com" type="button">複製信箱 / Copy</button></article>
-<article class="social-card" role="group" aria-label="6 / 6 — YZU Mail"><span class="slot-number">06</span><span class="pixel-app mail"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#8ba668" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#faf2d5" d="M5 8h22v17H5zm3 3v2h3v2h3v2h4v-2h3v-2h3v-2zm0 6v5h16v-5h-3v2h-3v2h-4v-2h-3v-2z"/></svg></span><h3>YZU Mail</h3><p><a href="mailto:s1141546@yzu.edu.tw">s1141546@yzu.edu.tw</a></p><button class="slot-action copy" data-copy="s1141546@yzu.edu.tw" type="button">複製信箱 / Copy</button></article>
+<article class="social-card" role="group" aria-label="1 / 7 — Instagram"><span class="slot-number">01</span><span class="pixel-app ig"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#d35895" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#ef9b65" d="M0 24h32v4h-4v4H4v-4H0z"/><path fill="#fff4dc" d="M9 6h14v2h3v16h-3v2H9v-2H6V9h3zm1 3v2H9v11h2v1h11v-2h1V11h-2V9z"/><path fill="#fff4dc" d="M14 11h5v2h2v7h-2v2h-6v-2h-2v-6h3zm0 4v4h4v-4zm7-5h3v3h-3z"/></svg></span><h3>Instagram</h3><p>@_hta_1312</p><a class="slot-action" href="https://www.instagram.com/_hta_1312/" target="_blank" rel="noopener noreferrer">看看日常 ↗</a></article>
+<article class="social-card" role="group" aria-label="2 / 7 — Facebook"><span class="slot-number">02</span><span class="pixel-app fb"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#477ee0" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#f4f6ff" d="M17 6h8v5h-6v5h6v5h-6v11h-6V21H9v-5h4V10h2V8h2z"/></svg></span><h3>Facebook</h3><p>Huang Tai Ying</p><a class="slot-action" href="https://www.facebook.com/share/1HAtWhSL4w/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">打個招呼 ↗</a></article>
+<article class="social-card" role="group" aria-label="3 / 7 — Discord"><span class="slot-number">03</span><span class="pixel-app discord"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#5865f2" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#f1efff" d="M8 8h5v2h6V8h5v3h2v4h2v9h-5v-2H9v2H4v-9h2v-4h2z"/><path fill="#5865f2" d="M9 14h4v5H9zm10 0h4v5h-4zM12 23h8v2h-8z"/></svg></span><h3>Discord</h3><p>一起聊天、玩遊戲。</p><a class="slot-action" href="https://discord.gg/tUbKAQcD" target="_blank" rel="noopener noreferrer">加入 Discord ↗</a></article>
+<article class="social-card" role="group" aria-label="4 / 7 — Steam"><span class="slot-number">04</span><span class="pixel-app steam"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#284d6b" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#e6eff4" d="M20 5h7v2h2v8h-2v2h-6v-2h-3V8h2zm2 3v2h-1v3h2v1h2v-2h1V9h-1V8zM0 18h5v2h5v2h4v-4h3v-3h4v5h-3v4h-2v4H9v-2H5v-3H0z"/><path fill="#284d6b" d="M10 23h4v3h-4z"/></svg></span><h3>Steam</h3><p><span class="friend-caption">FRIEND CODE</span><span class="friend-code">1341861520</span></p><button class="slot-action" type="button" id="copy-steam">複製好友代碼 / Copy</button></article>
+<article class="social-card" role="group" aria-label="5 / 7 — Codeforces"><span class="slot-number">05</span><span class="pixel-app cf"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#26324a" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#f5c542" d="M5 14h6v13H5z"/><path fill="#4d8fe6" d="M13 5h6v22h-6z"/><path fill="#e5534b" d="M21 11h6v16h-6z"/></svg></span><h3>Codeforces</h3><p>asdfvsdfas</p><a class="slot-action" href="https://codeforces.com/profile/asdfvsdfas" target="_blank" rel="noopener noreferrer">看看我的解題 ↗</a></article>
+<article class="social-card" role="group" aria-label="6 / 7 — Email"><span class="slot-number">06</span><span class="pixel-app mail"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#8ba668" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#faf2d5" d="M5 8h22v17H5zm3 3v2h3v2h3v2h4v-2h3v-2h3v-2zm0 6v5h16v-5h-3v2h-3v2h-4v-2h-3v-2z"/></svg></span><h3>Email</h3><p><a href="mailto:phomaitrungmuoi@gmail.com">phomaitrungmuoi@gmail.com</a></p><button class="slot-action copy" data-copy="phomaitrungmuoi@gmail.com" type="button">複製信箱 / Copy</button></article>
+<article class="social-card" role="group" aria-label="7 / 7 — YZU Mail"><span class="slot-number">07</span><span class="pixel-app mail"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges"><path fill="#8ba668" d="M4 0h24v4h4v24h-4v4H4v-4H0V4h4z"/><path fill="#faf2d5" d="M5 8h22v17H5zm3 3v2h3v2h3v2h4v-2h3v-2h3v-2zm0 6v5h16v-5h-3v2h-3v2h-4v-2h-3v-2z"/></svg></span><h3>YZU Mail</h3><p><a href="mailto:s1141546@yzu.edu.tw">s1141546@yzu.edu.tw</a></p><button class="slot-action copy" data-copy="s1141546@yzu.edu.tw" type="button">複製信箱 / Copy</button></article>
 </div>
-<div class="rail-controls"><span id="swipe-hint">左右滑動 / Swipe to explore</span><div class="rail-nav" hidden><button id="social-prev" type="button" aria-label="上一張 / Previous" aria-controls="social-track">←</button><span id="social-position" aria-live="polite" aria-atomic="true">01 / 06</span><button id="social-next" type="button" aria-label="下一張 / Next" aria-controls="social-track">→</button></div></div>
+<div class="rail-controls"><span id="swipe-hint">左右滑動 / Swipe to explore</span><div class="rail-nav" hidden><button id="social-prev" type="button" aria-label="上一張 / Previous" aria-controls="social-track">←</button><span id="social-position" aria-live="polite" aria-atomic="true">01 / 07</span><button id="social-next" type="button" aria-label="下一張 / Next" aria-controls="social-track">→</button></div></div>
 </div></section>
 <section class="arcade" id="arcade" aria-labelledby="arcade-title">
-<div class="arcade-top"><h2 id="arcade-title">挖一下？<span>Pixel Miner · 45 second run.</span></h2><span class="arcade-score">SCORE <span id="game-score">0</span><br>TIME <span id="game-time">45</span><br>BEST <span id="game-best">0</span></span></div>
-<div class="game-wrap"><div class="game-stage"><canvas id="miner-game" width="320" height="240" tabindex="0" aria-label="像素挖礦遊戲。左右移動收集礦石並避開 TNT。" aria-describedby="game-instructions">需要支援 Canvas 的瀏覽器才能遊玩。</canvas></div><div class="game-actions"><button id="game-start" type="button">開始 / Play</button><button id="game-pause" class="secondary" type="button" disabled>暫停 / Pause</button></div><p class="game-hint" id="game-instructions">← → 或拖曳移動 · 收集礦石 · 避開 TNT<br>Move with arrows or drag · Catch ores · Avoid TNT</p><p id="game-status" role="status" aria-live="polite">準備好了？ / Ready?</p></div>
+<div class="arcade-top"><h2 id="arcade-title">踩個地雷？<span>Minesweeper · 13 × 12 · 25 TNT</span></h2><span class="arcade-score">TNT <span id="ms-mines">025</span><br>TIME <span id="ms-time">000</span><br>BEST <span id="ms-best">--</span></span></div>
+<div class="game-wrap"><div class="ms-frame"><div id="ms-board" class="ms-board" role="group" aria-label="踩地雷棋盤：13 欄 12 列 / Minesweeper board, 13 columns by 12 rows" aria-describedby="ms-hint"></div></div><div class="game-actions"><button id="ms-new" type="button">新遊戲 / New game</button><button id="ms-mode" class="secondary" type="button" aria-pressed="false">插旗模式 / Flag mode</button></div><p class="game-hint" id="ms-hint">點擊挖掘 · 右鍵或長按插旗 · 方向鍵移動，Enter 挖掘，F 插旗<br>Click to dig · Right-click or long-press to flag · Arrows move, Enter digs, F flags</p><p id="ms-status" role="status" aria-live="polite">準備好了？ / Ready?</p></div>
 </section>
 </main><footer><span>© <span id="year">2026</span> HUANG TAI YING</span><span>Built block by block.</span><a href="#home">BACK TO TOP ↑</a></footer><div id="toast" role="status" aria-live="polite"></div>
 
@@ -165,198 +164,6 @@ button.peek-cat{padding:0;border:0;background:transparent;cursor:pointer;width:8
   cat.addEventListener('click',()=>{clearTimeout(timer);cat.classList.remove('petted');void cat.offsetWidth;cat.classList.add('petted');bubble.textContent=replies[count++%replies.length];bubble.classList.add('show');timer=setTimeout(()=>{cat.classList.remove('petted');bubble.classList.remove('show');},1600);});
 })();
 
-</script>
-<script>
-(() => {
-  'use strict';
-
-  const canvas = document.getElementById('miner-game');
-  const ctx = canvas?.getContext('2d');
-  const start = document.getElementById('game-start');
-  const pause = document.getElementById('game-pause');
-  const scoreEl = document.getElementById('game-score');
-  const timeEl = document.getElementById('game-time');
-  const bestEl = document.getElementById('game-best');
-  const status = document.getElementById('game-status');
-  if (!canvas || !ctx || !start || !pause || !scoreEl || !timeEl || !bestEl || !status) return;
-
-  const W = 320, H = 240, ROUND_TIME = 45;
-  const keys = new Set();
-  const ores = [
-    {name:'STONE', points:1, color:'#879087', edge:'#5e675e', chance:.31},
-    {name:'COAL', points:2, color:'#4f5650', edge:'#282e29', chance:.23},
-    {name:'IRON', points:3, color:'#c49c83', edge:'#8d6f5c', chance:.18},
-    {name:'GOLD', points:5, color:'#e3bf52', edge:'#a8832e', chance:.13},
-    {name:'DIAMOND', points:8, color:'#67d6d0', edge:'#318f91', chance:.09},
-    {name:'EMERALD', points:10, color:'#62c77c', edge:'#2f8c4e', chance:.06}
-  ];
-
-  let mode = 'idle', playerX = 160, score = 0, timeLeft = ROUND_TIME, best = 0;
-  let items = [], particles = [], spawnClock = 0, last = 0, raf = 0, elapsed = 0;
-  let pointer = null, combo = 0, comboClock = 0, flash = 0;
-
-  try { best = Number(localStorage.getItem('taiying-pixel-miner-best')) || 0; } catch {}
-
-  const clamp = (v, a = 17, b = 303) => Math.max(a, Math.min(b, v));
-  const rect = (color, x, y, w, h) => {ctx.fillStyle = color;ctx.fillRect(Math.round(x), Math.round(y), w, h);};
-
-  function sync() {
-    scoreEl.textContent = String(score);
-    timeEl.textContent = String(Math.max(0, Math.ceil(timeLeft)));
-    bestEl.textContent = String(best);
-  }
-
-  function chooseOre() {
-    const roll = Math.random();
-    let total = 0;
-    for (const ore of ores) { total += ore.chance; if (roll <= total) return ore; }
-    return ores[0];
-  }
-
-  function spawn() {
-    const isTnt = elapsed > 5 && Math.random() < Math.min(.22, .10 + elapsed / 420);
-    const ore = isTnt ? {name:'TNT', points:0, color:'#d75d50', edge:'#8f342e'} : chooseOre();
-    const size = ore.name === 'TNT' ? 17 : 14 + Math.floor(Math.random() * 4);
-    items.push({x:18 + Math.random() * 284, y:-size, size, ore, speed:42 + elapsed * .72 + Math.random() * 18, spin:Math.random() * 4});
-  }
-
-  function burst(item, color) {
-    for (let i = 0; i < 7; i++) particles.push({x:item.x,y:item.y,vx:(Math.random()-.5)*55,vy:-12-Math.random()*45,life:.45+Math.random()*.25,color});
-  }
-
-  function catchItem(item) {
-    if (item.ore.name === 'TNT') {
-      timeLeft = Math.max(0, timeLeft - 3);
-      combo = 0; comboClock = 0; flash = .22;
-      status.textContent = 'TNT! −3 秒 / seconds';
-      burst(item, '#d75d50');
-      return;
-    }
-    combo = comboClock > 0 ? Math.min(5, combo + 1) : 1;
-    comboClock = 2.2;
-    const gained = item.ore.points * combo;
-    score += gained;
-    status.textContent = item.ore.name + '  +' + gained + (combo > 1 ? '  COMBO ×' + combo : '');
-    burst(item, item.ore.color);
-  }
-
-  function finish() {
-    mode = 'over';
-    cancelAnimationFrame(raf);
-    pause.disabled = true;
-    keys.clear();
-    if (score > best) {
-      best = score;
-      try { localStorage.setItem('taiying-pixel-miner-best', String(best)); } catch {}
-      status.textContent = '新紀錄！/ New best: ' + best;
-    } else status.textContent = '時間到！/ Time up · ' + score + ' pts';
-    start.textContent = '再玩一次 / Replay';
-    sync(); draw();
-  }
-
-  function step(dt) {
-    if (mode !== 'playing') return;
-    elapsed += dt; timeLeft -= dt; comboClock = Math.max(0, comboClock - dt); flash = Math.max(0, flash - dt);
-    if (comboClock === 0) combo = 0;
-    const direction = (keys.has('ArrowRight') || keys.has('d') ? 1 : 0) - (keys.has('ArrowLeft') || keys.has('a') ? 1 : 0);
-    playerX = clamp(playerX + direction * 190 * dt);
-    spawnClock -= dt;
-    if (spawnClock <= 0) {
-      spawn();
-      spawnClock += Math.max(.30, .72 - elapsed * .006);
-    }
-    for (const item of items) {
-      item.y += item.speed * dt;
-      item.spin += dt * 2;
-      if (item.y + item.size / 2 >= 205 && item.y - item.size / 2 <= 225 && Math.abs(item.x - playerX) < 20 + item.size / 2) {
-        item.caught = true; catchItem(item);
-      }
-    }
-    items = items.filter(item => !item.caught && item.y < H + 22);
-    for (const p of particles) {p.x += p.vx*dt;p.y += p.vy*dt;p.vy += 85*dt;p.life -= dt;}
-    particles = particles.filter(p => p.life > 0);
-    sync();
-    if (timeLeft <= 0) finish();
-  }
-
-  function drawBlock(item) {
-    const s = item.size, x = item.x - s/2, y = item.y - s/2;
-    rect(item.ore.edge, x, y, s, s);
-    rect(item.ore.color, x+2, y+2, s-4, s-4);
-    if (item.ore.name === 'TNT') {
-      rect('#efe5cd', x+2, y+6, s-4, 5);
-      ctx.fillStyle='#7d2825';ctx.font='bold 5px monospace';ctx.textAlign='center';ctx.fillText('TNT',item.x,y+10);
-    } else {
-      rect('#edf0cf', x+4, y+4, 3, 3);
-      rect(item.ore.edge, x+s-6, y+s-6, 3, 3);
-    }
-  }
-
-  function drawPlayer() {
-    const x = Math.round(playerX);
-    rect('#2b3429', x-18, 211, 36, 5);
-    rect('#6f7d68', x-15, 205, 30, 9);
-    rect('#9aa394', x-11, 208, 22, 5);
-    rect('#202720', x-13, 216, 7, 7); rect('#202720', x+6, 216, 7, 7);
-    rect('#b4d88a', x-4, 198, 8, 8);
-    rect('#d9c38f', x-3, 193, 6, 6);
-  }
-
-  function draw() {
-    rect(flash > 0 ? '#2a1714' : '#101710', 0, 0, W, H);
-    for (let i=0;i<30;i++) rect(i%4===0?'#31442d':'#243424',(i*67)%318,(i*37)%195,2,2);
-    rect('#263522',0,229,W,11);rect('#526143',0,229,W,2);
-    items.forEach(drawBlock);
-    particles.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/.7);rect(p.color,p.x,p.y,3,3);ctx.globalAlpha=1;});
-    drawPlayer();
-    if (combo > 1 && comboClock > 0) {ctx.fillStyle='#d8e8b9';ctx.font='bold 9px monospace';ctx.textAlign='left';ctx.fillText('COMBO ×'+combo,8,15);}
-    if (mode !== 'playing') {
-      rect('#101710dd',0,82,W,70);
-      ctx.fillStyle='#b4d88a';ctx.textAlign='center';ctx.font='bold 13px monospace';
-      ctx.fillText(mode==='idle'?'PIXEL MINER':mode==='paused'?'PAUSED':'TIME UP',160,111);
-      ctx.fillStyle='#a8b09f';ctx.font='9px monospace';ctx.fillText(mode==='idle'?'CATCH ORES · AVOID TNT':score+' POINTS',160,130);
-    }
-  }
-
-  function loop(now) {
-    if (mode !== 'playing') return;
-    const dt = Math.min(Math.max((now-last)/1000,0),.035);last=now;step(dt);draw();
-    if (mode === 'playing') raf=requestAnimationFrame(loop);
-  }
-
-  function resume() {
-    if (mode !== 'paused') return;
-    mode='playing';last=performance.now();pause.textContent='暫停 / Pause';status.textContent='挖礦中 / Mining';canvas.focus({preventScroll:true});raf=requestAnimationFrame(loop);
-  }
-
-  function stop() {
-    if (mode !== 'playing') return;
-    mode='paused';cancelAnimationFrame(raf);keys.clear();pause.textContent='繼續 / Resume';status.textContent='已暫停 / Paused';draw();
-  }
-
-  function reset() {
-    cancelAnimationFrame(raf);playerX=160;score=0;timeLeft=ROUND_TIME;items=[];particles=[];spawnClock=.45;elapsed=0;combo=0;comboClock=0;flash=0;keys.clear();
-    mode='paused';pause.disabled=false;start.textContent='重新開始 / Restart';sync();resume();
-  }
-
-  start.addEventListener('click',reset);
-  pause.addEventListener('click',()=>{if(mode==='playing')stop();else if(mode==='paused')resume();});
-  canvas.addEventListener('keydown',e=>{
-    if (['ArrowLeft','ArrowRight','a','d'].includes(e.key) && mode==='playing') {e.preventDefault();keys.add(e.key);}
-    if ((e.key===' ' || e.key==='Escape') && mode==='playing') {e.preventDefault();stop();}
-  });
-  window.addEventListener('keyup',e=>keys.delete(e.key));
-  canvas.addEventListener('blur',()=>keys.clear());
-  const aim=e=>{const r=canvas.getBoundingClientRect();playerX=clamp((e.clientX-r.left)*W/r.width);};
-  canvas.addEventListener('pointerdown',e=>{if(mode!=='playing')return;pointer=e.pointerId;canvas.setPointerCapture(pointer);aim(e);canvas.focus({preventScroll:true});});
-  canvas.addEventListener('pointermove',e=>{if(pointer===e.pointerId&&mode==='playing')aim(e);});
-  const release=e=>{if(pointer===e.pointerId){if(canvas.hasPointerCapture(pointer))canvas.releasePointerCapture(pointer);pointer=null;}};
-  canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
-  window.addEventListener('blur',stop);
-  if ('IntersectionObserver' in window) new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)stop();}).observe(canvas);
-  sync();draw();
-})();
 </script>
 </body></html>
 
