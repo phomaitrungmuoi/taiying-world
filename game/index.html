@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elemental Zombies</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="hud">
+  <div id="hpwrap"><div id="hp"></div><span id="hptxt"></span></div>
+  <div id="stats"><div id="kills"></div><div id="next"></div></div>
+  <div id="combo"></div>
+  <div id="toasts"></div>
+  <div id="bar"></div>
+  <div id="hurt"></div>
+</div>
+
+<div id="start" class="overlay">
+  <div class="panel">
+    <h1>⚡ Elemental Zombies</h1>
+    <p>Đánh zombie bằng nguyên tố · hạ gục quái để mở khóa nguyên tố mới · ghép 5 chiêu từ nhiều hệ khác nhau.</p>
+    <ul>
+      <li><b>WASD</b> di chuyển · <b>Space</b> nhảy · <b>Chuột</b> xoay camera</li>
+      <li><b>1–5</b> dùng chiêu · <b>Tab</b> mở bảng trang bị chiêu</li>
+      <li>Dùng chiêu <b>khác hệ</b> liên tiếp để tăng <b>COMBO</b> (+15% sát thương mỗi bậc)</li>
+    </ul>
+    <button id="play">Bắt đầu chơi</button>
+  </div>
+</div>
+
+<div id="menu" class="overlay hidden">
+  <div class="panel wide">
+    <h2>Trang bị chiêu thức</h2>
+    <p class="sub">Chọn một ô, rồi bấm vào chiêu để gán. Có thể trộn chiêu của mọi hệ đã mở khóa. <b>Tab</b> để đóng.</p>
+    <div id="slots"></div>
+    <div id="elements"></div>
+  </div>
+</div>
+
+<script type="module" src="game.js"></script>
+</body>
+</html>
